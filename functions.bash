@@ -25,7 +25,7 @@ function editor() {
 
 function config() {
 	if [[ $1 == bash ]]; then
-		$EDITOR ~/.bash_profile
+		$EDITOR ~/profile.bash
 	fi
 	if [[ $1 == git ]]; then
 		$EDITOR ~/.gitconfig
@@ -34,7 +34,7 @@ function config() {
 		$EDITOR ~/.gitignore
 	fi
 	if [[ $1 == python ]]; then
-		$EDITOR ~/.config/pycodstyle
+		$EDITOR ~/.config/pycodestyle
 	fi
 	if [[ $1 == flake8 ]]; then
 		$EDITOR ~/.flake8

@@ -22,7 +22,7 @@ function precmd() {
 }
 
 function preprompt() {
-	PS1='${FAINT}[\h]${RESET}\n${PURPLE}${BOLD}📁\w${GREEN}$(currentbranch)${RESET} \$ '
+	PS1='${FAINT}[ \u ]${RESET}\n📁 ${PURPLE}${BOLD}\w${GREEN}$(currentbranch)${RESET} \$ '
 }
 
 trap precmd DEBUG

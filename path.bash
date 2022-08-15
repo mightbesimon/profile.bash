@@ -3,8 +3,9 @@
 ################################################################################
 #######                             exports                              #######
 ################################################################################
-export PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
+# export PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:${PATH}"
+export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
 
 # maven for java development
 # export PATH=/opt/apache-maven-3.8.5/bin:$PATH
@@ -33,5 +34,5 @@ function desktop() {
 }
 
 function repo() {
-	cd ~/HealthNow/Repositories/$1
+	cd ~/HealthNow/repos/$1
 }
