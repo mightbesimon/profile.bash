@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ################################################################################
-#######                             exports                              #######
+#######                             exports                              #######
 ################################################################################
 # export PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:${PATH}"
