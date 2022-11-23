@@ -3,10 +3,10 @@
 ################################################################
 #######                 quality of life                  #######
 ################################################################
-function stat() {
-	GetFileInfo $1
-	stat -x $1
-}
+# function stat() {
+# 	GetFileInfo $1
+# 	stat -x $1
+# }
 
 function show() {
 	tabs -4

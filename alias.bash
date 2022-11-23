@@ -23,6 +23,5 @@ alias pypi='rm -rv dist *.egg-info; python -m build && python -m twine upload di
 #######                               misc                               #######
 ################################################################################
 alias getingeat='PATH=~/commands/bin:$PATH'
-# alias +x='chmod u+x'
-# alias healthnow='source ~/HealthNow/scripts.bash'
-# alias hn=healthnow
+alias x='chmod u+x'
+alias stat='stat -x'
