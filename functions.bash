@@ -3,12 +3,8 @@
 ################################################################
 #######                 quality of life                  #######
 ################################################################
-# function stat() {
-# 	GetFileInfo $1
-# 	stat -x $1
-# }
-
-function show() {
+function show()
+{
 	tabs -4
 	cat $1
 	tabs
@@ -19,11 +15,13 @@ function show() {
 ################################################################
 export EDITOR=code
 
-function editor() {
+function editor()
+{
 	EDITOR=$1
 }
 
-function config() {
+function config()
+{
 	if [[ $1 == bash ]]; then
 		$EDITOR ~/profile.bash
 	fi

@@ -12,17 +12,20 @@ alias gitds='git rm --cached -f *.DS_Store'
 ################################################################################
 #######                         directory branch                         #######
 ################################################################################
-function currentbranch() {
+function currentbranch()
+{
 	git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/'
 }
 
-function precmd() {
+function precmd()
+{
 	case $BASH_COMMAND in $PROMPT_COMMAND) ;;
 	*) ;;
 	esac
 }
 
-function preprompt() {
+function preprompt()
+{
 	PS1='\[${FAINT}\][ \# | \u | \h ]\[${RESET}\]\n \[${PURPLE}\]\[${BOLD}\]\w\[${GREEN}\]$(currentbranch)\[${RESET}\] \$ '
 }
 

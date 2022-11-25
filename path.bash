@@ -25,14 +25,17 @@ alias sublime='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 ################################################################################
 #######                            navigation                            #######
 ################################################################################
-function github() {
+function github()
+{
 	cd ~/github/$1
 }
 
-function desktop() {
+function desktop()
+{
 	cd ~/Desktop/$1
 }
 
-function repo() {
+function repo()
+{
 	cd ~/HealthNow/repos/$1
 }
