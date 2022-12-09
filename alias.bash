@@ -3,7 +3,7 @@
 ################################################################################
 #######                         quality of life                          #######
 ################################################################################
-alias ls='ls -ahF'
+alias ls='ls -ahFG'
 alias python=python3
 alias venv='source venv/bin/activate'
 alias reload='source ~/.bash_profile'
