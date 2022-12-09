@@ -14,7 +14,6 @@ source ~/profile.bash/compile.bash
 ################################################################
 #######                   config tweeks                   #######
 ################################################################
-export HOMEBREW_NO_AUTO_UPDATE=1
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export GPG_TTY=$(tty)	# github commit signing
 
