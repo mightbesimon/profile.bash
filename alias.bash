@@ -6,7 +6,7 @@
 alias ls='ls -ahFG'
 alias python=python3
 alias venv='source venv/bin/activate'
-alias reload='source ~/.bash_profile'
+alias reload='source ~/.bash_profile; trap precommand DEBUG'
 
 
 ################################################################
