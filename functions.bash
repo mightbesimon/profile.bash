@@ -11,7 +11,7 @@ function show()
 }
 
 ################################################################
-#######                      config                       #######
+#######                      config                      #######
 ################################################################
 export EDITOR=code
 
@@ -22,19 +22,24 @@ function editor()
 
 function config()
 {
-	if [[ $1 == bash ]]; then
+	if [[ $1 == bash ]]
+	then
 		$EDITOR ~/profile.bash
 	fi
-	if [[ $1 == git ]]; then
+	if [[ $1 == git ]]
+	then
 		$EDITOR ~/.gitconfig
 	fi
-	if [[ $1 == *ignore ]]; then
+	if [[ $1 == *ignore ]]
+	then
 		$EDITOR ~/.gitignore
 	fi
-	if [[ $1 == python ]]; then
+	if [[ $1 == python ]]
+	then
 		$EDITOR ~/.config/pycodestyle
 	fi
-	if [[ $1 == flake8 ]]; then
+	if [[ $1 == flake8 ]]
+	then
 		$EDITOR ~/.flake8
 	fi
 }
