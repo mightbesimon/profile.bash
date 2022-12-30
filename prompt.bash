@@ -11,7 +11,17 @@ function currentbranch()
 function exitstatus()
 {
 	(($skip_exitstatus)) && skip_exitstatus=0 && return
-	echo $1$BLACK $2 $BG_BR_BLACK$BR_WHITE $(date '+%F %X') $RESET$'\n'
+	(($1 == 0)) && bg=$BG_GREEN || bg=$BG_RED
+	(($1 == 0)) && chr=✓ || chr=✗
+
+	echo $bg$BLACK $chr \
+	     $BG_BR_BLACK$BR_WHITE $SECONDS''sec\
+			 $BLACK''│\
+			 $BR_WHITE''exit=$1\
+			 $BLACK''│\
+			 $BR_WHITE$COMMAND \
+			 $BG_BLUE$BLACK $(date '+%F %X') $RESET
+	echo
 }
 
 ################################################################
@@ -19,17 +29,18 @@ function exitstatus()
 ################################################################
 function preprompt()
 {
-	(($? == 0)) && exitstatus $BG_GREEN ✓ || exitstatus $BG_RED ✗
+	exitstatus $?
+	skip_precommand=0
 	PS1='\[$FAINT\][\#]  \h → \u\[$RESET\]\n \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\] 👉 '
 	PS2='\[$FAINT\]  \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\]    '
-	skip_precommand=0
 }
 
 function precommand()
 {
 	(($skip_precommand)) && return
 	[[ $BASH_COMMAND == $PROMPT_COMMAND ]] && skip_exitstatus=1 && return
-	#
+	COMMAND=$BASH_COMMAND
+	SECONDS=0
 	skip_precommand=1
 }
 
