@@ -19,7 +19,8 @@ function currentbranch()
 
 function preprompt()
 {
-	PS1='\[${FAINT}\][ \# | \u | \h ]\[${RESET}\]\n \[${PURPLE}\]\[${BOLD}\]\w\[${GREEN}\]$(currentbranch)\[${RESET}\] \$ '
+	PS1='\[$FAINT\][ \# | \u | \h ]\[$RESET\]\n \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\] 👉 '
+	PS2='\[$FAINT\]  \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\]    '
 }
 
-PROMPT_COMMAND=preprompt
+export PROMPT_COMMAND=preprompt
