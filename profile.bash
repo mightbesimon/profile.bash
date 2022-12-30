@@ -6,8 +6,8 @@
 source ~/profile.bash/colour.bash
 source ~/profile.bash/path.bash
 source ~/profile.bash/alias.bash
+source ~/profile.bash/prompt.bash
 source ~/profile.bash/functions.bash
-source ~/profile.bash/git.bash
 source ~/profile.bash/compile.bash
 
 
