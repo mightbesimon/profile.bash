@@ -42,7 +42,8 @@ function preprompt()
 {
 	exitstatus $?
 	skip_precommand=0
-	PS1='\[$FAINT\][\#]  \h → \u\[$RESET\]\n \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\] 👉 '
+	PS1=' \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\] 👉 '
+	PS1='\[$FAINT\][\#]  \h → \u\[$RESET\]\[\e]2;\w$(currentbranch)\a\]\n'$PS1
 	PS2='\[$FAINT\]  \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\]    '
 }
 
