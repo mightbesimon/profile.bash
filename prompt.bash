@@ -14,13 +14,14 @@ function exitstatus()
 	(($1 == 0)) && bg=$BG_GREEN || bg=$BG_RED
 	(($1 == 0)) && chr=✓ || chr=✗
 
-	echo $bg$BLACK $chr \
-	     $BG_BR_BLACK$BR_WHITE $SECONDS''sec\
-			 $BLACK''│\
-			 $BR_WHITE''exit=$1\
-			 $BLACK''│\
-			 $BR_WHITE$COMMAND \
-			 $BG_BLUE$BLACK $(date '+%F %X') $RESET
+	echo -n "$bg$BLACK $chr "
+	echo -n "$BG_BR_BLACK$BR_WHITE ${SECONDS}sec "
+	echo -n "${BLACK}│ "
+	echo -n "${BR_WHITE}exit=$1 "
+	echo -n "${BLACK}│ "
+	echo -n "$BR_WHITE$(head -c $(($COLUMNS-44)) <<< $COMMAND) "
+	echo -n "$BG_BLUE$BLACK $(date '+%F %X') $RESET"
+	echo
 	echo
 }
 
