@@ -3,7 +3,7 @@
 ################################################################################
 #######                             exports                              #######
 ################################################################################
-# export PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
+export PATH="~/Library/Python/3.9/bin:${PATH}"
 export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:${PATH}"
 export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
 
