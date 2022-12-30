@@ -21,9 +21,10 @@ export GPG_TTY=$(tty)	# github commit signing
 ################################################################
 #######                 MAIN STARTS HERE                 #######
 ################################################################
-# easter egg
-TODAY=$(date +%m/%d)
 echo
+neofetch 2> /dev/null
+
+TODAY=$(date +%m/%d)
 echo 'On this day:'
 echo '============'
 grep $TODAY /usr/share/calendar/calendar.birthday
