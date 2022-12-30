@@ -42,9 +42,9 @@ function preprompt()
 {
 	exitstatus $?
 	skip_precommand=0
-	PS1=' \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\] 👉 '
+	PS1=' \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\] 👉 \[$BLUE\]'
 	PS1='\[$FAINT\][\#]  \h → \u\[$RESET\]\[\e]2;\w$(currentbranch)\a\]\n'$PS1
-	PS2='\[$FAINT\]  \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\]    '
+	PS2='\[$FAINT\]  \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\]    \[$BLUE\]'
 }
 
 function precommand()
@@ -52,8 +52,9 @@ function precommand()
 	(($skip_precommand)) && return
 	[[ $BASH_COMMAND == $PROMPT_COMMAND ]] && skip_exitstatus=1 && return
 	COMMAND=$BASH_COMMAND
-	SECONDS=0
+	echo -n "$RESET"
 	skip_precommand=1
+	SECONDS=0
 }
 
 skip_exitstatus=1
