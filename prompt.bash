@@ -24,15 +24,14 @@ function exitstatus()
 	trimlen=$((40-${#1}-${#SECONDS}))
 	trimmed=$(head -c $trimlen <<< $padded | tr x ' ')
 
-	echo -n "$bg$BLACK $chr "
+	echo -n "$RESET$bg$BLACK $chr "
 	echo -n "$BG_BR_BLACK$BR_WHITE ${SECONDS}sec "
 	echo -n "${BLACK}│ "
 	echo -n "${BR_WHITE}exit=$1 "
 	echo -n "${BLACK}│ "
 	echo -n "$BR_WHITE$trimmed "
 	echo -n "$BG_BLUE$BLACK $(date '+%F %X') $RESET"
-	echo
-	echo
+	echo $'\n'$(repeat '-' $COLUMNS)
 }
 
 ################################################################
