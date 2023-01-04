@@ -22,24 +22,12 @@ function editor()
 
 function config()
 {
-	if [[ $1 == bash ]]
-	then
-		$EDITOR ~/profile.bash
-	fi
-	if [[ $1 == git ]]
-	then
-		$EDITOR ~/.gitconfig
-	fi
-	if [[ $1 == *ignore ]]
-	then
-		$EDITOR ~/.gitignore
-	fi
-	if [[ $1 == python ]]
-	then
-		$EDITOR ~/.config/pycodestyle
-	fi
-	if [[ $1 == flake8 ]]
-	then
-		$EDITOR ~/.flake8
-	fi
+	case $1 in
+		bash    ) $EDITOR ~/profile.bash/;;
+		git     ) $EDITOR ~/.gitconfig ~/.gitignore;;
+		python  ) $EDITOR ~/.config/pycodestyle;;
+		flake8  ) $EDITOR ~/.flake8;;
+		neofetch) $EDITOR ~/.config/neofetch/config.conf;;
+		*) echo bash, git, python, flake8, neofetch;;
+	esac
 }
