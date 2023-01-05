@@ -24,10 +24,4 @@ export GPG_TTY=$(tty)	# github commit signing
 echo
 neofetch 2> /dev/null
 
-TODAY=$(date +%m/%d)
-echo 'On this day:'
-echo '============'
-grep $TODAY /usr/share/calendar/calendar.birthday
-grep $TODAY /usr/share/calendar/calendar.computer
-grep $TODAY /usr/share/calendar/calendar.history
-echo
+onthisday $(date +%m/%d)

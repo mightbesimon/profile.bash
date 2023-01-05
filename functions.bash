@@ -31,3 +31,19 @@ function config()
 		*) echo bash, git, python, flake8, neofetch;;
 	esac
 }
+
+################################################################
+#######                    easter egg                    #######
+################################################################
+function onthisday()
+{
+	# echo '╭─────────────╮'
+	# echo '│ On this day │'
+	# echo '╰─────────────╯'
+	echo On this day:
+	echo ============
+	grep $1 /usr/share/calendar/calendar.birthday
+	grep $1 /usr/share/calendar/calendar.computer
+	grep $1 /usr/share/calendar/calendar.history
+	echo
+}
