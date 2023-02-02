@@ -12,7 +12,14 @@ source ~/profile.bash/compile.bash
 
 
 ################################################################
-#######                   config tweeks                   #######
+#######                    variables                     #######
+################################################################
+export EDITOR=code
+export BROWSER=none
+
+
+################################################################
+#######                  config tweeks                   #######
 ################################################################
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export GPG_TTY=$(tty)	# github commit signing
