@@ -1,6 +1,8 @@
 # profile.bash
 
-![screenshot](thumbnail.png)
+![screenshot](screenshot.png)
+
+## Installation
 
 ```bash
 cd ~
