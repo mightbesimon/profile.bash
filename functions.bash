@@ -6,12 +6,12 @@
 function config()
 {
 	case $1 in
-		bash    ) $EDITOR ~/profile.bash/ ~/.bash_profile;;
+		bash    ) $EDITOR ~/.bash_profile $PROFILE;;
 		git     ) $EDITOR ~/.gitconfig ~/.gitignore;;
 		python  ) $EDITOR ~/.config/pycodestyle;;
-		flake8  ) $EDITOR ~/.flake8;;
+		pip     ) $EDITOR ~/.config/pip/pip.conf;;
 		neofetch) $EDITOR ~/.config/neofetch/config.conf;;
-		*) echo bash, git, python, flake8, neofetch;;
+		*) echo 'bash, git, python, pip, neofetch';;
 	esac
 }
 

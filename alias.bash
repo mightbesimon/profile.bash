@@ -9,7 +9,7 @@ alias stat='stat -x'
 alias python='python3'
 alias venv='source venv/bin/activate'
 alias reload='source ~/.bash_profile && trap precommand DEBUG'
-alias update='git -C ~/github/profile.bash/ pull && reload'
+alias update='git -C $PROFILE pull'
 
 cd() { builtin cd $@ && ls; }
 
