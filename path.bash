@@ -29,22 +29,3 @@ export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 ################################################################################
 alias matlab='/Applications/matlab.app/bin/matlab -nodesktop -nosplash'
 alias sublime='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
-
-
-################################################################################
-#######                            navigation                            #######
-################################################################################
-function github()
-{
-	cd ~/github/$1
-}
-
-function desktop()
-{
-	cd ~/Desktop/$1
-}
-
-function repo()
-{
-	cd ~/HealthNow/repos/$1
-}
