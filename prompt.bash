@@ -31,7 +31,8 @@ function exitstatus()
 	echo -n "${BLACK}│ "
 	echo -n "$BR_WHITE$trimmed "
 	echo -n "$BG_BLUE$BLACK $(date '+%F %X') $RESET"
-	echo $'\n'$(repeat '-' $COLUMNS)
+	echo
+	repeat '-' $COLUMNS && echo
 }
 
 ################################################################
@@ -41,9 +42,12 @@ function preprompt()
 {
 	exitstatus $?
 	skip_precommand=0
-	PS1=' \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\] 👉 \[$BLUE\]'
-	PS1='\[$RESET\]\[$FAINT\][\#]  \h → \u\[$RESET\]\[\e]2;\w$(currentbranch)\a\]\n'$PS1
-	PS2='\[$FAINT\]  \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$(currentbranch)\[$RESET\]    \[$BLUE\]'
+	CURRENT_BRANCH=$(currentbranch)
+	PS1=' \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$CURRENT_BRANCH\[$RESET\] 👉 \[$BLUE\]'
+	PS1='\[$RESET\]\[$FAINT\][\#]  \h → \u\[$RESET\]\n'$PS1
+	PS1='\[\e]2;\w$CURRENT_BRANCH\a\]'$PS1
+	PS2='  \[$BOLD\]\[$PURPLE\]\w\[$GREEN\]$CURRENT_BRANCH\[$RESET\]    \[$BLUE\]'
+	PS2='\[$FAINT\]'$PS2
 }
 
 function precommand()
