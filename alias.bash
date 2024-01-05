@@ -11,6 +11,8 @@ alias venv='source venv/bin/activate'
 alias reload='source ~/.bash_profile && trap precommand DEBUG'
 alias update='git -C ~/github/profile.bash/ pull && reload'
 
+cd() { builtin cd $@ && ls; }
+
 
 ################################################################
 #######                     publish                      #######
