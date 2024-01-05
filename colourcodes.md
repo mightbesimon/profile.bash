@@ -1,60 +1,40 @@
-# font variant
+# ANSI Escape Sequence Code
 
-1	bold
-2	dim
-3	italics
-4	underline
-5	blink
-7	invert text and background colour
-8	invisible
-9	strikethrough
+```
+\e[{seq}m
+\e[{seq};{seq};{seq}m
+```
+## style variant
 
-# text colours	8-16 bits
+seq | description
+--- | ---
+`0` | reset
+`1` | bold
+`2` | dim
+`3` | italics
+`4` | underline
+`5` | blink
+`7` | invert fg bg colour
+`8` | invisible
+`9` | strikethrough
 
-39	Default
-30	Black
-31	Red
-32	Green
-33	Yellow
-34	Blue
-35	Magenta
-36	Cyan
-37	White
-90	Bright Black
-91	Bright Red
-92	Bright Green
-93	Bright Yellow
-94	Bright Blue
-95	Bright Magenta
-96	Bright Cyan
-97	Bright White
+## 3-4 bit (8-16 colours)
 
-# background colours	8-16 bits
+colour  | fg dim | fg bright | bg dim | bg bright
+------- |:------:|:---------:|:------:|:---------:
+black   |  `30`  |   `90`    |  `40`  |   `100`
+red     |  `31`  |   `91`    |  `41`  |   `101`
+green   |  `32`  |   `92`    |  `42`  |   `102`
+yellow  |  `33`  |   `93`    |  `43`  |   `103`
+blue    |  `34`  |   `94`    |  `44`  |   `104`
+magenta |  `35`  |   `95`    |  `45`  |   `105`
+cyan    |  `36`  |   `96`    |  `46`  |   `106`
+white   |  `37`  |   `97`    |  `47`  |   `107`
+default |  `39`  |           |  `49`  |
 
-49	Default
-40	Black
-41	Red
-42	Green
-43	Yellow
-44	Blue
-45	Magenta
-46	Cyan
-47	White
-100		Bright Black
-101		Bright Red
-102		Bright Green
-103		Bright Yellow
-104		Bright Blue
-105		Bright Magenta
-106		Bright Cyan
-107		Bright White
+## 8 bit (256 colours),  24 bit (rgb colours)
 
-# 256 bit colours
-
-ESC[38;5;{ID}m	text
-ESC[48;5;{ID}m	background
-
-# 24 bit rgb colours
-
-ESC[38;2;{r};{g};{b}m	text
-ESC[48;2;{r};{g};{b}m	background
+.          | 8 bit 256 colours |   24 bit rgb colours
+---------- |:-----------------:|:----------------------:
+foreground |  `\e[38;5;{ID}m`  | `\e[38;2;{r};{g};{b}m`
+background |  `\e[48;5;{ID}m`  | `\e[48;2;{r};{g};{b}m`
