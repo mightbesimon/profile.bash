@@ -4,9 +4,12 @@
 #######                 quality of life                  #######
 ################################################################
 alias ls='ls -ahFG'
-alias python=python3
+alias x='chmod u+x'
+alias stat='stat -x'
+alias python='python3'
 alias venv='source venv/bin/activate'
-alias reload='source ~/.bash_profile; trap precommand DEBUG'
+alias reload='source ~/.bash_profile && trap precommand DEBUG'
+alias update='git -C ~/github/profile.bash/ pull && reload'
 
 
 ################################################################
@@ -15,16 +18,9 @@ alias reload='source ~/.bash_profile; trap precommand DEBUG'
 alias vsce='npx vsce'
 alias firebase='npx firebase-tools'
 alias react='npx create-react-app . --template typescript'
-alias vscode='yo code'
 alias pypi='rm -rv dist *.egg-info; python -m build && python -m twine upload dist/*'
+# alias vscode='yo code'
 
-
-################################################################
-#######                       misc                       #######
-################################################################
-alias getingeat='PATH=~/commands/bin:$PATH'
-alias x='chmod u+x'
-alias stat='stat -x'
 
 ################################################################
 #######                       git                        #######
