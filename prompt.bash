@@ -10,7 +10,7 @@ function currentbranch()
 
 function repeat()
 {
-	printf -- $1%.s $(seq -s ' ' $2)
+	printf %$2s | tr ' ' "$1"
 }
 
 function exitstatus()
@@ -20,9 +20,9 @@ function exitstatus()
 	(($1 == 0)) && chr=✓ || chr=✗
 
 	padlen=$((40-${#SECONDS}-${#1}-${#COMMAND}))
-	padded=$COMMAND$(repeat x $padlen)
+	padded=$COMMAND$(repeat ' ' $padlen)
 	trimlen=$((40-${#1}-${#SECONDS}))
-	trimmed=$(head -c $trimlen <<< $padded | tr x ' ')
+	trimmed=$(head -c $trimlen <<< "$padded")
 
 	echo -n "$RESET$bg$BLACK $chr "
 	echo -n "$BG_BR_BLACK$BR_WHITE ${SECONDS}sec "
