@@ -3,26 +3,26 @@
 ################################################################
 #######                control characters                #######
 ################################################################
-export RESET=$'\e[0m'
-export BOLD=$'\e[1m'
-export FAINT=$'\e[2m'
-export ITALIC=$'\e[3m'
+export     RESET=$'\e[0m'
+export      BOLD=$'\e[1m'
+export     FAINT=$'\e[2m'
+export    ITALIC=$'\e[3m'
 export UNDERLINE=$'\e[4m'
-export BLINK=$'\e[5m'
-export INVERT=$'\e[7m'
-export CONSEAL=$'\e[8m'
+export     BLINK=$'\e[5m'
+export    INVERT=$'\e[7m'
+export   CONSEAL=$'\e[8m'
 
 ################################################################
 #######            normal foreground colours             #######
 ################################################################
-export BLACK=$'\e[30m'
-export RED=$'\e[31m'
-export GREEN=$'\e[32m'
+export  BLACK=$'\e[30m'
+export    RED=$'\e[31m'
+export  GREEN=$'\e[32m'
 export YELLOW=$'\e[33m'
-export BLUE=$'\e[34m'
+export   BLUE=$'\e[34m'
 export PURPLE=$'\e[35m'
-export CYAN=$'\e[36m'
-export WHITE=$'\e[37m'
+export   CYAN=$'\e[36m'
+export  WHITE=$'\e[37m'
 
 ################################################################
 #######            bright foreground colours             #######

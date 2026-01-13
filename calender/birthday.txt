@@ -1,0 +1,280 @@
+01/01│ 1919 │ J.D. Salinger born
+01/01│ 1735 │ Paul Revere born in Boston
+01/02│ 1920 │ Isaac Asimov born in Petrovichi, Russian SFSR
+01/04│ 1864 │ George Washington Carver born in Missouri
+01/04│ 1785 │ Jakob Grimm born
+01/04│ 1797 │ Wilhelm Beer born, first astronomer to map Mars
+01/05│ 1859 │ DeWitt B. Brace born, inventor of spectrophotometer
+01/10│ 1738 │ Ethan Allen born
+01/11│ 1757?│ Alexander Hamilton born in Nevis, British West Indies
+01/12│ 1941 │ "Long" John Baldry is born in London
+01/13│ 1834 │ Horatio Alger born
+01/13│ 1884 │ Sophie Tucker born
+01/13│ 1864 │ Wilhelm Wien born, Nobel prize for blackbody radiation laws
+01/14│ 1875 │ Albert Schweitzer born
+01/15│ 1929 │ Martin Luther King, Jr. born
+01/17│ 1706 │ Benjamin Franklin born in Boston
+01/19│ 1809 │ Edgar Allan Poe born in Boston
+01/19│ 1807 │ Robert Edward Lee born in Stratford Estate, Virginia
+01/20│ 1898 │ George Burns born
+01/21│ 1924 │ Lenin died
+01/21│ 1824 │ Thomas Jonathan "Stonewall" Jackson born in Clarksburg, VA
+01/22│ 1561 │ Sir Francis Bacon born
+01/23│ 1840 │ Ernst Abbe born, formulated diffraction theory
+01/23│ 1899 │ Humphrey Bogart born in New York City
+01/23│ 1737 │ John Hancock born
+01/23│ 1730 │ Joseph Hewes born
+01/23│ 1981 │ Samuel Barber died
+01/24│ 1949 │ John Belushi is born in Chicago
+01/25│ 1759 │ Robert Burns born
+01/25│ 1882 │ Virginia Woolf born
+01/25│ 1874 │ W. Somerset Maugham born
+01/27│ 1850 │ Samuel Gompers born
+01/30│ 1882 │ Franklin Delano Roosevelt born in Hyde Park, New York
+01/31│ 1919 │ Jackie Robinson born
+02/03│ 1874 │ Gertrude Stein born
+02/05│ 1935 │ Alex Harvey (SAHB) is born in Glasgow, Scotland
+02/06│ 1952 │ King George VI of UK dies;  his daughter becomes Elizabeth II
+02/07│ 1885 │ Sinclair Lewis born
+02/08│ 1795 │ Friedleib F. Runge born, father of paper chromatography
+02/08│ 1828 │ Jules Verne born in Nantes, France
+02/09│ 1489 │ George Hartmann born, designed astrolabes, timepieces, etc.
+02/10│ 1775 │ Charles Lamb born
+02/10│ 1868 │ William Allen White born
+02/11│ 1847 │ Thos. Edison born
+02/11│ 1800 │ William Henry Fox Talbot (photographic pioneer) born
+02/12│ 1809 │ Abraham Lincoln born
+02/12│ 1809 │ Charles Darwin born in Shrewsbury, England
+02/15│ 1564 │ Galileo Galilei born in Pisa, Italy
+02/15│ 1820 │ Susan B. Anthony born
+02/16│ 1698 │ Pierre Bouguer born, founder of photometry
+02/17│ 1856 │ Federick Eugene Ives born, pioneer of halftone
+02/17│ 1902 │ Marion Anderson born
+02/17│ 1874 │ T. J. Watson, Sr. born
+02/18│ 1838 │ Ernst Mach born, philosopher & optics pioneer
+02/19│ 1473 │ Nicolas Copernicus born in Thorn, Poland
+02/20│ 1838 │ Ludwig Boltzmann born, atomic physics pioneer
+02/21│ 1838 │ Alexis De Rochon born, developed the spyglass
+02/22│ 1732 │ George Washington born
+02/22│ 1838 │ Pierre Jules Cesar Janssen born, found hydrogen in the sun
+02/23│ 1868 │ W.E.B. DuBois born
+02/24│ 1836 │ Winslow Homer born
+02/25│ 1943 │ George Harrison born in Liverpool, England
+02/25│ 1841 │ Renoir born
+02/26│ 1786 │ Dominique Francois Jean Arago born; observed "Poisson's spot" cf June 21
+02/28│ 1533 │ Michel de Mantaigne born
+02/29│ 1860 │ Herman Hollerith born
+03/01│ 1910 │ David Niven born
+03/02│ 1904 │ Dr. Seuss born
+03/04│ 1747 │ Casimir Pulaski born
+03/05│ 1982 │ John Belushi dies in Los Angeles
+03/07│ 1792 │ Sir John Frederick William Herschel born, astronomer
+03/08│ 1804 │ Alvan Clark born, astronomer & lens manufacturer
+03/08│ 1900 │ Howard Aiken born
+03/11│ 1737 │ Robert Treat Paine born
+03/11│ 1890 │ Vannevar Bush born
+03/12│ 1824 │ Gustav Robert Kirchhoff born, physicist
+03/14│ 1879 │ Albert Einstein born
+03/14│ 1864 │ Casey Jones born
+03/14│ 1835 │ Giovanni Virginia Schiaparelli born, astronomer; named Mars "canals"
+03/14│ 1768 │ Jean Baptiste Joseph Fourier born, mathematician & physicist
+03/15│ 1767 │ Andrew "Old Hickory" Jackson, 7th President of the United States,
+03/15│      │ ...born in Waxhaw, South Carolina
+03/15│ 1809 │ J.J. Robert's Birthday in Liberia
+03/16│ 1739 │ George Clymer born
+03/16│ 1751 │ James Madison, 4th President of the United States, born in King George
+03/16│      │ ...County, Virginia
+03/21│ 1993 │ NetBSD project born
+03/24│ 1874 │ Harry Houdini born
+03/26│ 1753 │ Benjamin Thompson born, Count Rumford; physicist
+03/26│ 1996 │ David Packard died; age of 83
+03/27│ 1845 │ Wilhelm Conrad Roentgen born, discoverer of X-rays
+03/28│ 1749 │ Pierre Simon de Laplace born, mathematician & astronomer
+03/30│ 1746 │ Francisco Jose de Goya born
+03/30│ 1880 │ Sean O'Casey born
+03/30│ 1853 │ Vincent Van Gogh born
+03/31│ 1596 │ Rene Descartes born, mathematician & philosopher
+04/02│ 1805 │ Hans Christian Andersen born, fairy tale author
+04/02│ 2005 │ Pope John Paul II (Karol Wojtyla) died in Vatican
+04/03│ 1783 │ Washington Irving born
+04/05│ 1588, philosopher │ Thomas Hobbes born
+04/08│563 BC│ Buddha born
+04/08│ 1732 │ David Rittenhouse born, astronomer & mathematician
+04/09│ 1830 │ Edward Muybridge born, motion-picture pioneer
+04/09│ 1919 │ J. Presper Eckert born
+04/10│ 1794 │ Commodore Matthew Calbraith Perry born
+04/10│ 1829 │ William Booth born, founder of the Salvation Army
+04/13│ 1743 │ Thomas Jefferson, 3rd President of the United States, born Shadwell
+04/13│      │ ...Plantation, Albemarle County, Virginia
+04/14│ 1629 │ Christian Huygen born, physicist & astronomer; discovered Saturn's rings
+04/15│ 1452 │ Leonardo da Vinci born
+04/16│ 1889 │ Charles (Charlie) Chaplin (Sir) born in London
+04/22│ 1724 │ Kant born
+04/27│ 1774 │ Louis Victor de Broglie born, physicist
+04/28│ 1758 │ James Monroe, 5th President of the United States, born in Westmoreland
+04/28│      │ ...County, Viriginia
+04/29│ 1854 │ Jules Henri Poincare born, founder of topology
+04/29│ 1863 │ William Randolph Hearst born in San Francisco
+04/30│ 1777 │ Karl Friedrich Gauss born, mathematician & astronomer
+05/01│ 1930 │ Little Walter (Marion Walter Jacobs) is born in Alexandria, Louisiana
+05/02│ 1903 │ Dr. Benjamin Spock born
+05/04│ 1852 │ Alice Liddell born, Alice's Adventures in Wonderland
+05/04│      │ ...& Through the Looking-Glass
+05/09│ 1957 │ Pinza died
+05/10│ 1899 │ Fred Astaire (Frederick Austerlitz) born in Omaha, Nebraska
+05/11│ 1768 │ Johnny Appleseed born
+05/12│ 1820 │ Florence Nightingale born in Florence, Italy
+05/13│ 1842 │ Arthur S. Sullivan born
+05/15│ 1953 │ Mike Oldfield is born in Essex, England
+05/18│ 1920 │ Pope John Paul II (Karol Wojtyla) born in Wadowice, Poland
+05/19│ 1890 │ Ho Chi Minh born
+05/21│427 BC│ Plato (Aristocles) born in Athens(?)
+05/27│ 1911 │ Hubert H. Humphrey born
+05/28│ 1934 │ Dionne quintuplets born
+05/29│ 1874 │ Gilbert Keith Chesterton born
+05/29│ 1917 │ John Fitzgerald Kennedy, 35th President of the United States, born in
+05/29│      │ ...Brookline, Massachusetts
+05/29│ 1736 │ Patrick Henry born
+05/30│ 1908 │ Mel (Melvin Jerome) Blanc born in San Francisco
+06/01│ 1801 │ Brigham Young born
+06/01│ 1928 │ Marilyn Monroe born
+06/02│ 1857 │ Edward Elgar (Sir) born in Worcester, England
+06/03│ 1811 │ Henry James born
+06/07│ 1848 │ (Eugene Henri) Paul Gaugin born
+06/07│ 1778 │ George Bryan "Beau" Brummel born
+06/07│ 1954 │ Alan Mathison Turing died
+06/08│ 1867 │ Frank Lloyd Wright born in Richland Center, Wisconsin
+06/13│323 BC│ Alexander the Great dies
+06/15│ 1843 │ Edward (Edvard Hagerup) Grieg born in Bergen, Norway
+06/16│1686BC│ Hammurabi the Great dies, Babylon
+06/18│ 1898 │ M.C. Escher born
+06/19│ 1993 │ FreeBSD project born
+06/22│ 1903 │ Carl Hubbell born
+06/22│ 1949 │ Meryl Streep born in Summit, New Jersey
+06/22│ 1919 │ Konrad Zuse born in Berlin
+06/23│ 1912 │ Alan Mathison Turing born
+06/25│ 1903 │ Eric Arthur Blair (a.k.a. George Orwell) born
+06/27│ 1880 │ Helen Keller born
+07/03│ 1883 │ Franz Kafka born
+07/04│ 1804 │ Nathaniel Hawthorne born in Salem, Massachusetts
+07/04│ 1826 │ John Adams and Thomas Jefferson die on same day
+07/06│ 1866 │ (Helen) Beatrix Potter born
+07/06│ 1747 │ John Paul Jones born
+07/07│ 1891 │ P.T. Barnum dies
+07/08│ 1838 │ Count Ferdinand von Zeppelin born
+07/10│ 1509 │ John Calvin born
+07/11│ 1767 │ John Quincy Adams, 6th President of the United States, born in
+07/11│      │ ...Braintree, Massachusetts
+07/12│ 1817 │ Henry David Thoreau born
+07/15│ 1779 │ Clement Clarke Moore born, author of "A Visit from Saint Nicholas"
+07/18│ 1939 │ Brian Auger is born in London
+07/25│ 1948 │ Steve Goodman is born in Chicago
+07/29│ 1883 │ Mussolini born
+07/30│ 1818 │ Emily Bronte born
+07/30│ 1863 │ Henry Ford born
+08/01│ 1819 │ Herman Melville born
+08/03│ 1966 │ Lenny Bruce dies of a morphine overdose
+08/06│ 1943 │ Jonathan B. Postel is born in Altadena, California
+08/08│ 1937 │ Dustin Hoffman born in Los Angeles
+08/12│ 1955 │ Thomas Mann's Death
+08/13│ 1899 │ Alfred Hitchcock born
+08/13│ 1860 │ Annie Oakley born
+08/13│ 1927 │ Fidel Castro born
+08/17│ 1892 │ Mae West born
+08/18│ 1774 │ Meriwether Lewis born
+08/20│ 1940 │ Leon Trotsky assassinated
+08/21│ 1920 │ Christopher Robin Milne born
+08/21│ 1921 │ Winnie-the-Pooh (Edward Bear) born (given to Christopher Robin Milne)
+08/23│ 1912 │ Gene Kelly born
+08/27│ 1908 │ Lyndon B. Johnson born
+08/29│ 1809 │ Oliver Wendell Holmes born, physician & father of the jurist
+08/30│ 1907 │ John W. Mauchly born
+09/05│ 1638 │ King Louis XIV of France born
+09/05│ 1942 │ Raquel Welch born
+09/06│ 1909 │ Word is received that Perry has reached the North Pole and died
+09/07│ 1789 │ James Fenimore Cooper born in Burlington, NJ
+09/07│ 1533 │ Queen Elizabeth I of England born
+09/08│ 1157 │ Richard ``the Lionheart'', king of England born in Oxford
+09/08│ 1925 │ Peter Sellers born in Southsea, England
+09/09│ 1976 │ Chinese Communist Party Chairman Mao Tse-Tung dies at age 82
+09/09│ 1941 │ Dennis Ritchie born
+09/12│ 1913 │ Jesse Owens born
+09/13│ 1851 │ Walter Reed born
+09/15│ 1890 │ Agatha Christie born in Torquay, England
+09/16│ 1914 │ Allen Funt born in Brooklyn, NY
+09/18│ 1905 │ Greta Garbo born
+09/18│ 1970 │ Jimi Hendrix dies from an overdose
+09/20│ 1878 │ Upton (Beall) Sinclair born
+09/21│ 1866 │ H.G. (Herbert George) Wells born in Bromley, England
+09/21│ 1645 │ Louis Joliet born
+09/22│ 1881 │ President Garfield dies of wounds in Baltimore
+09/23│ 63 BC│ Augustus (Gaius Octavius) Caesar born in Rome
+09/23│480 BC│ Euripides born in Salamis, Greece
+09/24│ 1896 │ F. Scott Fitzgerald born
+09/26│ 1774 │ Johnny Appleseed born
+09/26│ 1888 │ T.S. (Thomas Stearns) Eliot born in St. Louis
+09/27│ 1840 │ Thomas Nast born
+09/28│ 1573 │ Michelangelo Buonarroti born in Caprese, Italy
+09/28│106 BC│ Pompey (Gnaeus Pompeius Magnus) born in Rome
+09/28│ 1925 │ Seymour Cray born
+09/29│ 1907 │ Gene Autry born
+10/01│ 1924 │ Jimmy Carter, 39th President of United States, born in Plains, Georgia
+10/02│322 BC│ Aristotle dies of indigestion
+10/02│ 1869 │ Mohandas K. Gandhi born at Porbandar, Kathiawad, India
+10/04│ 1903 │ John V. Atanasoff born
+10/05│ 1902 │ Ray Kroc (founder of McDonald's) born
+10/13│ 1925 │ Lenny Bruce is born in New York City
+10/13│ 70 BC│ Virgil (Publius Vergilius Maro) born near Mantua, Italy
+10/14│ 1890 │ Dwight David Eisenhower, 34th President of the United States, born in
+10/14│      │ ...Denison, Texas
+10/14│ 1644 │ William Penn born in London
+10/15│ 1881 │ Pelham Grenville Wodehouse born
+10/16│ 1758 │ Noah Webster born
+10/16│ 1854 │ Oscar (Fingal O'Flahertie Wills) Wilde born in Dublin
+10/16│ 1998 │ Dr. Jonathan B. Postel dies at age 55
+10/17│ 1780 │ Richard Mentor Johnson born, 9th V.P. of U.S.
+10/21│ 1833 │ Alfred Nobel born in Stockholm
+10/25│ 1881 │ Pablo Picasso born in Malaga, Spain
+10/27│ 1728 │ James Cook is born
+10/27│ 1858 │ Theodore (Teddy) Roosevelt, 26th President of the United States, born
+10/27│      │ ...New York, New York
+10/27│ 1933 │ Gerald M. Weinberg born
+10/30│ 1735 │ John Adams, 2nd President of the United States, born Quincy, Massachusetts
+10/31│ 1887 │ Chiang Kai-Shek born
+10/31│ 1912 │ Dale Evans born
+11/02│ 1734 │ Daniel Boone born near Reading, PA
+11/04│ 1650 │ King William III of Orange born
+11/05│ 1912 │ Roy Rogers born
+11/09│ 1934 │ Carl Sagan born
+11/10│ 1483 │ Martin Luther born in Eisleben, Germany
+11/10│ 1982 │ Soviet President Leonid Brezhnev dies at age 75
+11/11│ 1922 │ Kurt Vonnegut, Jr, born in Indianapolis
+11/13│ 1850 │ Robert Louis Stevenson born
+11/13│  354 │ St. Augustine of Hippo born in Numidia, Algeria
+11/18│ 1908 │ Imogene Coca born
+11/18│ 1836 │ William S. Gilbert born
+11/20│ 1925 │ Robert Francis Kennedy (RFK) born in Boston, Massachusetts
+11/26│ 1922 │ Charles Schulz born in Minneapolis
+11/26│ 1894 │ Norbert Wiener born in Columbia, Missouri
+11/29│ 1933 │ John Mayall is born in Cheshire, England
+11/30│ 30 BC│ Cleopatra died
+11/30│ 1835 │ Mark Twain (Samuel Clemmens) born in Florida, Missouri
+12/01│ 1935 │ Woody Allen (Allen Stuart Konigsberg) born in Brooklyn, NY
+12/04│ 1976 │ Tommy Bolin dies of a heroin overdose in Miami
+12/05│ 1837 │ Martin Van Buren, 8th President of the United States, born in
+12/05│      │ ...Kinderhook, New York
+12/05│ 1901 │ Walt (Walter Elias) Disney born in Chicago
+12/08│ 65 BC│ Horace (Quintus Horatius Flaccus) born in Venosa (Italy)
+12/08│ 1894 │ James (Grover) Thurber born in Columbus, Ohio
+12/10│ 1830 │ Emily Dickenson born
+12/12│ 1893 │ E.G. Robinson born
+12/14│ 1799 │ George Washington dies
+12/17│ 1929 │ William Safire (Safir) born
+12/18│ 1995 │ Konrad Zuse died in H�nfeld
+12/20│ 1996 │ Carl Sagan died
+12/21│ 1804 │ Benjamin Disraeli born
+12/22│ 1858 │ Giacomo Puccini born
+12/23│ 1805 │ Joseph Smith born
+12/25│ 1642 │ Isaac Newton (Sir) born in Grantham, England
+12/26│ 1791 │ Chas. Babbage born
+12/28│ 1903 │ John von Neumann born
