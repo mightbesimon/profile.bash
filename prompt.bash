@@ -76,9 +76,12 @@ function preprompt
 	((nlinks    )) && padlen=$((padlen - 10 - ${#nlinks}))
 	((nexes     )) && padlen=$((padlen - 6 - ${#nexes}))
 	((dotdsstore)) && padlen=$((padlen - 10))
-	while ((padlen < 0))
-	do padlen=$((padlen + 80))
-	done
+	((padlen < 0)) && padlen=$((padlen + $COLUMNS - 80))
+	((padlen < 0)) && padlen=$((padlen + $COLUMNS))
+	# ((padlen < 0)) && padlen=$((padlen - $COLUMNS + 80))
+	# while ((padlen < 0))
+	# do padlen=$((padlen + 80))
+	# done
 
 	# move to ls custom function
 	# and output count socket, pipes
@@ -101,13 +104,10 @@ function preprompt
 	PS1=$PS1"\[$BG_BR_BLACK$WHITE\] $nfiles\[$FAINT\] files\[$RESET\]"
 	((nlinks)) && PS1=$PS1"\[$BG_BLACK$PURPLE\] $nlinks\[$FAINT\] symlinks\[$RESET\]"
 	((nexes )) && PS1=$PS1"\[$BG_RED$BLACK$BOLD\] $nexes\[$RESET$BG_RED$BLACK\] exes\[$RESET\]"
-	# ((dotdsstore)) && PS1=$PS1"\[$BG_YELLOW$BLACK$BOLD\] .DS_Store\[$RESET\]"
 	PS1=$PS1'\n\[$YELLOW\]$ARROW \[$BLUE\]'
 	# PS1='\[$RESET$FAINT\][\#] \h → \u\[$RESET\]\n'$PS1
 	PS1="\[\e]2;\w$BRANCH$VENV\a\]"$PS1		# window title
-	# PS2='\[$FAINT\]  \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]    \[$BLUE\]'
-	# PS2='$ARROW '
-	PS2=' \[$YELLOW$FAINT\]$ARROW\[$BLUE\]$RESET$BLUE'
+	PS2='\[$YELLOW$FAINT\]$ARROW \[$BLUE\]'
 }
 
 function precommand
