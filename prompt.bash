@@ -41,9 +41,9 @@ function exitstatus
 	# echo -n $BG_BLUE$BLACK $(date '+%F %X') $RESET
 	echo -n $BG_BLUE$BLACK $(date '+%FT%X') $RESET
 	# echo -n $BG_BLUE$BLACK $(date '+%d.%m.%Y %Hh%M:%S') $RESET
-	echo
-	echo $BR_BLACK$(repeat '-' $COLUMNS)$RESET
-	# echo $(peach)
+	echo $BR_BLACK
+	repeat '-' $COLUMNS
+	echo $RESET
 }
 
 function formatmilliseconds
@@ -67,22 +67,41 @@ function preprompt
 	BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')
 	VENV=$([ -n "$VIRTUAL_ENV" ] && echo " [$(basename "$VIRTUAL_ENV")]";)
 	DIR=$(dirs)
-	local ndirs=$(ls -l | grep -c ^d)
-	local nfiles=$(ls -l | grep -c ^-)
-	local nlinks=$(ls -l | grep -c ^l)
+	local dotdsstore=$(ls -a | grep -c '^\.DS_Store$')
+	local  ndirs=$(ls -Al | grep -c ^d)
+	local nfiles=$(ls -Al | grep -c ^-)
+	local nlinks=$(ls -Al | grep -c ^l)
+	local  nexes=$(ls -Al | grep -c '^-\S*x')
 	local padlen=$((65 - ${#DIR}-${#BRANCH}-${#VENV}-${#ndirs}-${#nfiles}))
-	((nlinks > 0)) && padlen=$((padlen - 10 - ${#nlinks}))
+	((nlinks    )) && padlen=$((padlen - 10 - ${#nlinks}))
+	((nexes     )) && padlen=$((padlen - 6 - ${#nexes}))
+	((dotdsstore)) && padlen=$((padlen - 10))
 	while ((padlen < 0))
-	do padlen=$((padlen - 80))
+	do padlen=$((padlen + 80))
 	done
+
+	# move to ls custom function
+	# and output count socket, pipes
+	local n_privilege_escalations=$(ls -Al | grep -c '^\S*s')
+	local               n_critial=$(ls -Al | grep -c '^\S*S')
+	local          n_world_writes=$(ls -Al | grep -c '^........w.')
+	((n_world_writes)) && ((${#DIR} > 1)) \
+	&& log_warn $n_world_writes 'world-writable file(s) or director(ies)'
+	((n_privilege_escalations)) && ((${#DIR} > 1)) \
+	&& log_error $n_privilege_escalations 'file(s) with setuid/setgid bits'
+	((n_critial)) && ((${#DIR} > 1)) \
+	&& log_crit $n_critial 'critical system files with malicious permissions'
 
 	# if no branch and pwd short, arrow on same line
 	# PS1=' \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]\n$ARROW \[$BLUE\]'
 	PS1=" \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]"
 	PS1=$PS1$(repeat ' ' $padlen)
+	((dotdsstore)) && PS1=$PS1"\[$BG_BR_BLACK$WHITE$FAINT\].DS_Store\[$RESET$BG_BR_BLACK$BLACK\]┃\[$RESET\]"
 	PS1=$PS1"\[$BG_BR_BLACK$WHITE\] $ndirs\[$FAINT\] dirs\[$RESET\]"
 	PS1=$PS1"\[$BG_BR_BLACK$WHITE\] $nfiles\[$FAINT\] files\[$RESET\]"
-	((nlinks > 0)) && PS1=$PS1"\[$BG_BLACK$PURPLE\] $nlinks\[$FAINT$PURPLE\] symlinks\[$RESET\]"
+	((nlinks)) && PS1=$PS1"\[$BG_BLACK$PURPLE\] $nlinks\[$FAINT\] symlinks\[$RESET\]"
+	((nexes )) && PS1=$PS1"\[$BG_RED$BLACK$BOLD\] $nexes\[$RESET$BG_RED$BLACK\] exes\[$RESET\]"
+	# ((dotdsstore)) && PS1=$PS1"\[$BG_YELLOW$BLACK$BOLD\] .DS_Store\[$RESET\]"
 	PS1=$PS1'\n\[$YELLOW\]$ARROW \[$BLUE\]'
 	# PS1='\[$RESET$FAINT\][\#] \h → \u\[$RESET\]\n'$PS1
 	PS1="\[\e]2;\w$BRANCH$VENV\a\]"$PS1		# window title

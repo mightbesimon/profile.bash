@@ -3,10 +3,13 @@
 ################################################################
 #######                     start up                     #######
 ################################################################
-function epochms { perl -MTime::HiRes=time -e "printf '%u', time*1000"; }
-function timer {
+function epochms
+{
+	perl -MTime::HiRes=time -e "printf '%u', time*1000"
+}
+function timer
+{
 	printf $FAINT'%2dms' $(($(epochms)-$1))
-	# eval $1=$(epochms)
 	printf -v $1 '%s' $(epochms)
 }
 session_ms=$(epochms)

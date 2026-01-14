@@ -56,7 +56,9 @@ function pip
 {
 	PIP_PATH=$(which pip)
 	[[ -z $PIP_PATH ]] && echo 'not inside virtual environment, use pip3' && return
-	[[ $1 == tree ]] && pipdeptree ${@:2} && return
+	[[ $1 == tree ]] && which pipdeptree \
+		|| (echo 'pipdeptree not installed anywhere' && return) \
+		&& pipdeptree ${@:2} && return
 	$PIP_PATH $@
 }
 
@@ -66,7 +68,6 @@ function pip
 ################################################################
 alias vsce='npx vsce'
 alias firebase='npx firebase-tools'
-alias react='npx create-react-app . --template typescript'
 alias pypi='rm -rv dist *.egg-info; python -m build && python -m twine upload dist/*'
 # alias vscode='yo code'
 
