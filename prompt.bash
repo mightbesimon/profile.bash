@@ -69,9 +69,12 @@ function preprompt
 	DIR=$(dirs)
 	local ndirs=$(ls -l | grep -c ^d)
 	local nfiles=$(ls -l | grep -c ^-)
-	# local fileinfo only display non zero, and need to list symbolic links
-	local padlen=$((65-${#DIR}-${#BRANCH}-${#VENV}-${#ndirs}-${#nfiles}))
-	((padlen < 0)) && padlen=$((padlen + 80))
+	local nlinks=$(ls -l | grep -c ^l)
+	local padlen=$((65 - ${#DIR}-${#BRANCH}-${#VENV}-${#ndirs}-${#nfiles}))
+	((nlinks > 0)) && padlen=$((padlen - 10 - ${#nlinks}))
+	while ((padlen < 0))
+	do padlen=$((padlen - 80))
+	done
 
 	# if no branch and pwd short, arrow on same line
 	# PS1=' \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]\n$ARROW \[$BLUE\]'
@@ -79,6 +82,7 @@ function preprompt
 	PS1=$PS1$(repeat ' ' $padlen)
 	PS1=$PS1"\[$BG_BR_BLACK$WHITE\] $ndirs\[$FAINT\] dirs\[$RESET\]"
 	PS1=$PS1"\[$BG_BR_BLACK$WHITE\] $nfiles\[$FAINT\] files\[$RESET\]"
+	((nlinks > 0)) && PS1=$PS1"\[$BG_BLACK$PURPLE\] $nlinks\[$FAINT$PURPLE\] symlinks\[$RESET\]"
 	PS1=$PS1'\n\[$YELLOW\]$ARROW \[$BLUE\]'
 	# PS1='\[$RESET$FAINT\][\#] \h → \u\[$RESET\]\n'$PS1
 	PS1="\[\e]2;\w$BRANCH$VENV\a\]"$PS1		# window title

@@ -49,7 +49,7 @@ function brew
 {
 	BREW_PATH=$(which brew)
 	[[ -z $BREW_PATH ]] && echo 'brew not installed' && return 1
-	[[ $1 == tree ]] && $BREW_PATH deps --tree --installed && return
+	[[ $1 == tree ]] && brew deps --tree --for-each $(brew leaves) && return
 	$BREW_PATH $@
 }
 function pip
