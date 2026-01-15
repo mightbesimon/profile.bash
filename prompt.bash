@@ -89,11 +89,11 @@ function preprompt
 	local               n_critial=$(ls -Al | grep -c '^\S*S')
 	local          n_world_writes=$(ls -Al | grep -c '^........w.')
 	((n_world_writes)) && ((${#DIR} > 1)) \
-	&& log_warn $n_world_writes 'world-writable file(s) or director(ies)'
+	&& log warn $n_world_writes 'world-writable file(s) or director(ies)'
 	((n_privilege_escalations)) && ((${#DIR} > 1)) \
-	&& log_error $n_privilege_escalations 'file(s) with setuid/setgid bits'
+	&& log error $n_privilege_escalations 'file(s) with setuid/setgid bits'
 	((n_critial)) && ((${#DIR} > 1)) \
-	&& log_crit $n_critial 'critical system files with malicious permissions'
+	&& log crit $n_critial 'critical system files with malicious permissions'
 
 	# if no branch and pwd short, arrow on same line
 	# PS1=' \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]\n$ARROW \[$BLUE\]'
@@ -113,7 +113,7 @@ function preprompt
 function precommand
 {
 	(($skip_precommand)) && return
-	[[ $BASH_COMMAND == $PROMPT_COMMAND ]] && skip_exitstatus=1 && return
+	[[ $BASH_COMMAND = $PROMPT_COMMAND ]] && skip_exitstatus=1 && return
 	COMMAND=$BASH_COMMAND
 	skip_precommand=1
 	echo -n $RESET

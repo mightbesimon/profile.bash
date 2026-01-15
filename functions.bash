@@ -11,13 +11,23 @@ function config()
 		python  ) $EDITOR ~/.config/pycodestyle;;
 		pip     ) $EDITOR ~/.config/pip/pip.conf;;
 		neofetch) $EDITOR ~/.config/neofetch/config.conf;;
-		*) echo 'bash, git, python, pip, neofetch';;
+		*) echo bash, git, python, pip, neofetch;;
 	esac
 }
 
 function log
 {
-	echo $BOLD'┃'$RESET$BG_BR_BLACK $@ $RESET
+	case $1 in
+		debug) shift && echo -n $BLUE;;
+		info ) shift && echo -n $GREEN;;
+		warn*) shift && echo -n $YELLOW;;
+		err* ) shift && echo -n $RED;;
+		crit*) shift && echo -n $PURPLE;;
+		show ) log debug debug && log info info && log warn warning && log error error && log crit critical && return;;
+		# *) echo ${BLUE}debug$RESET, ${GREEN}info$RESET, ${YELLOW}warn${FAINT}ing$RESET, ${RED}err${FAINT}or$RESET, ${PURPLE}crit${FAINT}ical$RESET;;
+	esac
+	echo $BOLD'┃'$RESET$BG_BR_BLACK "$@" $RESET
+	# echo ▍$RESET$BG_BR_BLACK "$@" $RESET
 }
 
 alias log_debug='echo -n $BLUE && log'
@@ -26,14 +36,6 @@ alias log_warn='echo -n $YELLOW && log'
 alias log_error='echo -n $RED && log'
 alias log_crit='echo -n $PURPLE && log'
 alias log_show='log_debug debug && log_info info && log_warn warning && log_error error && log_crit critial'
-
-# function log_info() {
-# 	echo "$BG_GREEN$BLACK ✓ $BG_BR_BLACK$BR_WHITE $@ $RESET"
-# }
-
-# function log_warn() {
-# 	echo "$BG_RED$BLACK ✗ $BG_BR_BLACK$BR_WHITE $@ $RESET"
-# }
 
 ################################################################
 #######                    easter egg                    #######
@@ -109,13 +111,12 @@ function onthisday
 	local  history=$(grep $day $PROFILE/calender/history.txt)
 	local  special=$(grep $day $PROFILE/calender/private.txt)
 	[[ $birthday ]] && first='birthday' || first='nothing happened'
-	first='history'
 	echo "$(repeat ' ' 65)"$BLUE$UNDERLINE'             '$RESET
-	echo ╭$(header $first)$(repeat '─' $((62 - ${#first})))$BLUE$BOLD$UNDERLINE'▏ON THIS DAY▕'$RESET'─╮'
-	# _onthisday $day birthday
-	# _header computer
-	# _onthisday $day computer
-	# _header history
+	echo ╭$(header year)┬$(header $first)$(repeat '─' $((55 - ${#first})))$BLUE$BOLD$UNDERLINE'▏ON THIS DAY▕'$RESET'─╮'
+	_onthisday $day birthday
+	_header computer history
+	_onthisday $day computer
+	_header history
 	_onthisday $day history
 	_special_day $day
 	echo -n ╰─

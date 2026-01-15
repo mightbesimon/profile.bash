@@ -14,7 +14,7 @@
 #     local target base dest rc=0
 #     for target in "$@"; do
 #         base=$(basename "$target") || continue
-#         if [[ $base == .* ]]; then
+#         if [[ $base = .* ]]; then
 #             dest="$trash_dir/h$base"
 #         else
 #             dest="$trash_dir/$base"
@@ -33,12 +33,3 @@
 #     /usr/bin/xargs -0 /usr/bin/du -hd 0 |
 #     sort -h
 # }
-
-
-# gunicorn app.main:app -c gunicorn.conf.py
-# source $(pipenv --venv)/bin/activate
-# find . -type f -name workspace.json -print -exec head {} \;
-# bws run --access-token $BWS_ACCESS_TOKEN
-# or just
-# bws run
-# bws secret list --output env

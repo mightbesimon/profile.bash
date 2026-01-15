@@ -55,5 +55,5 @@ onthisday $(date +%m/%d)
 
 # log 'bash profile activation complete'
 timer session_ms
-echo $RESET$BOLD$CYAN'┃'$RESET$BG_BR_BLACK bash profile activation complete $RESET
+echo $RESET$CYAN$BOLD'┃'$RESET$BG_BR_BLACK bash profile activation complete $RESET
 echo
