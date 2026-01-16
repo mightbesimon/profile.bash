@@ -54,15 +54,15 @@ function onthisday
 	[[ $birthday ]] && first='birthday'
 	[[ $history  ]] && first='history'
 	[[ $computer ]] && first='computer history'
+	[[ $computer && $history ]] && first='computer & history'
 	echo " $FAINT$UNDERLINE      $RESET  $BLUE$UNDERLINE             $RESET"
 	echo -n ╭$FAINT$UNDERLINE'▏year'▕$RESET
 	echo -n ┬─$BLUE$BOLD$UNDERLINE'▏ON THIS DAY▕'$RESET
 	echo $(repeat '─' $((55 - ${#first})))╴$first'╶╮'
 	[[ $birthday && $first = birthday ]] && echo "$birthday" | sed "$format"
-	[[ $computer && $first != *history ]] && echo ├──────┼$(repeat '─' 53)╴computer history╶┤
-	[[ $computer ]] && echo "$computer" | sed "$format"
-	[[ $history  && $first !=  history ]] && echo ├──────┼$(repeat '─' 62)╴history╶┤
-	[[ $history  ]] && echo "$history" | sed "$format"
+	[[ $computer && -z $history ]] && echo "$computer" | sed "$format"
+	[[ $computer &&    $history ]] && echo "$computer" | sed "$format" | sed "\$s/^\(.\)\(.*\)\(..\)\$/\1$UNDERLINE\2$RESET\3/"
+	[[                 $history ]] && echo "$history" | sed "$format"
 	[[ $first = 'nothing happened' ]] && echo "│      │$(repeat ' ' 22)quiet day in history$(repeat ' ' 29)│"
 	############################################################
 	if [[ $special ]]
@@ -78,9 +78,9 @@ function onthisday
 	fi
 	############################################################
 	echo -n $RESET
-	echo -n ╰─
+	echo -n ╰
 	echo -n $BG_BR_GREEN$BLACK$BOLD $fulldate $RESET
-	repeat '─' $((72-${#week}-${#fulldate}))
+	repeat '─' $((73-${#week}-${#fulldate}))
 	echo -n $BG_BR_YELLOW$BLACK$BOLD $week $RESET
 	echo -n ─╯
 	echo $'\n'
