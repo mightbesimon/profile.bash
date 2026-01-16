@@ -70,33 +70,14 @@ alias log_show='log_debug debug && log_info info && log_warn warning && log_erro
 # 	export LC_TIME=en_NZ.UTF-8
 # }
 
-function _onthisday
-{
-	grep $1 $PROFILE/calender/$2.txt 2> /dev/null | sed "s/^.....//;s/.*/&$(repeat ' ' 70)/;s/\(.\{${3:-79}\}\).*/\1│/"
-}
-
 function header
 {
-	echo -n ╴${1}╶
+	echo -n ╴$@╶
 }
 
 function _header
 {
-	echo ├$(header $1)$(repeat '─' $((76 - ${#1})))┤
-}
-
-function _special_day
-{
-	local special=$(_onthisday $1 private 77)
-	[[ -z $special ]] && return
-	echo -n $RED'├'
-	header special && header day && echo -n ─"$YELLOW"─
-	header special && header day && echo -n ─"$GREEN"─
-	header special && header day && echo -n ─"$BLUE"─
-	header special && header day && echo -n ─"$PURPLE"─
-	header special && header day
-	echo ┤
-	echo $CYAN"$special"$RESET
+	echo ├──────┼$(repeat '─' $((69 - ${#1})))$(header $1)┤
 }
 
 function onthisday
@@ -105,20 +86,41 @@ function onthisday
 	local week=$(date -jf %m/%d $day '+WEEK %V')
 	local fulldate=$(LC_TIME=fr_FR.UTF-8 date -jf %m/%d $day '+le %A %d %B')
 	local format="s/^.....//;s/.*/&$(repeat ' ' 70)/;s/\(.\{79\}\).*/\1│/"
-	local first=''
-	local birthday=$(grep $day $PROFILE/calender/birthday.txt)
-	local computer=$(grep $day $PROFILE/calender/computer.txt)
-	local  history=$(grep $day $PROFILE/calender/history.txt)
-	local  special=$(grep $day $PROFILE/calender/private.txt)
-	[[ $birthday ]] && first='birthday' || first='nothing happened'
-	echo "$(repeat ' ' 65)"$BLUE$UNDERLINE'             '$RESET
-	echo ╭$(header year)┬$(header $first)$(repeat '─' $((55 - ${#first})))$BLUE$BOLD$UNDERLINE'▏ON THIS DAY▕'$RESET'─╮'
-	_onthisday $day birthday
-	_header computer history
-	_onthisday $day computer
-	_header history
-	_onthisday $day history
-	_special_day $day
+	local first='nothing happened'
+	local birthday="$(grep $day $PROFILE/calender/birthday.txt 2> /dev/null)"
+	local computer="$(grep $day $PROFILE/calender/computer.txt 2> /dev/null)"
+	local  history="$(grep $day $PROFILE/calender/history.txt  2> /dev/null)"
+	#    { [[ $computer ]] && first='computer history'; } \
+	# || { [[ $history  ]] && first='history'; } \
+	# || { [[ $birthday ]] && first='birthday'; } \
+	# || first='nothing happened'
+	[[ $birthday ]] && first='birthday'
+	[[ $history  ]] && first='history'
+	[[ $computer ]] && first='computer history'
+	# echo "$(repeat ' ' 9)$BLUE$UNDERLINE             $RESET"
+	echo " $FAINT$UNDERLINE      $RESET  $BLUE$UNDERLINE             $RESET"
+	echo ╭$FAINT$UNDERLINE'▏year'▕$RESET'┬─'$BLUE$BOLD$UNDERLINE'▏ON THIS DAY▕'$RESET$(repeat '─' $((55 - ${#first})))$(header $first)'╮'
+	[[ $birthday && $first = birthday ]] && echo "$birthday" | sed "$format"
+	[[ $computer && $first != 'computer history' ]] && _header 'computer history'
+	[[ $computer ]] && echo "$computer" | sed "$format"
+	[[ $history && $first != history ]] &&_header history
+	[[ $history ]] && echo "$history" | sed "$format"
+	[[ $first = 'nothing happened' ]] && echo "│      │$(repeat ' ' 22)quiet day in history$(repeat ' ' 29)│"
+	############################################################
+	local special=$(grep $day $PROFILE/calender/private.txt 2> /dev/null \
+		| sed "s/^.....//;s/.*/&$(repeat ' ' 70)/;s/\(.\{77\}\).*/\1│/")
+	if [[ $special ]]
+	then
+		echo -n $RED'├'
+		header speci┼l && header day && echo -n ─"$YELLOW"─
+		header special && header day && echo -n ─"$GREEN"─
+		header special && header day && echo -n ─"$BLUE"─
+		header special && header day && echo -n ─"$PURPLE"─
+		header special && header day
+		echo ┤
+		echo $CYAN"$special"$RESET
+	fi
+	############################################################
 	echo -n ╰─
 	echo -n $BG_BR_GREEN$BLACK$BOLD $fulldate $RESET
 	repeat '─' $((72-${#week}-${#fulldate}))

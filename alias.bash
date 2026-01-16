@@ -18,6 +18,7 @@ alias python='python3'
 alias reload='source ~/.bash_profile && trap precommand DEBUG'
 alias update='git -C $PROFILE pull'
 alias doc=man
+alias box="source $PROFILE/box.bash"
 
 #alias clean='find . -name '.DS_Store' -type f -print -delete'
 # cat ~/Library/Application\ Support/Code/User/workspaceStorage/*/workspace.json | grep file | sed -E 's/.*"folder": "file:\/\/([^"]+)".*/\1/'
