@@ -40,16 +40,6 @@ alias log_show='log_debug debug && log_info info && log_warn warning && log_erro
 ################################################################
 #######                    easter egg                    #######
 ################################################################
-function header
-{
-	echo -n ╴$@╶
-}
-
-function _header
-{
-	echo ├──────┼$(repeat '─' $((69 - ${#1})))╴$1╶┤
-}
-
 function onthisday
 {
 	local day=${1:-$(date +%m/%d)}
@@ -60,6 +50,7 @@ function onthisday
 	local birthday="$(grep $day $PROFILE/calender/birthday.txt 2> /dev/null)"
 	local computer="$(grep $day $PROFILE/calender/computer.txt 2> /dev/null)"
 	local  history="$(grep $day $PROFILE/calender/history.txt  2> /dev/null)"
+	local  special="$(grep $day $PROFILE/calender/private.txt  2> /dev/null)"
 	[[ $birthday ]] && first='birthday'
 	[[ $history  ]] && first='history'
 	[[ $computer ]] && first='computer history'
@@ -68,26 +59,25 @@ function onthisday
 	echo -n ┬─$BLUE$BOLD$UNDERLINE'▏ON THIS DAY▕'$RESET
 	echo $(repeat '─' $((55 - ${#first})))╴$first'╶╮'
 	[[ $birthday && $first = birthday ]] && echo "$birthday" | sed "$format"
-	[[ $computer && $first != 'computer history' ]] && _header 'computer history'
+	[[ $computer && $first != *history ]] && echo ├──────┼$(repeat '─' 53)╴computer history╶┤
 	[[ $computer ]] && echo "$computer" | sed "$format"
-	[[ $history && $first != history ]] &&_header history
-	[[ $history ]] && echo "$history" | sed "$format"
+	[[ $history  && $first !=  history ]] && echo ├──────┼$(repeat '─' 62)╴history╶┤
+	[[ $history  ]] && echo "$history" | sed "$format"
 	[[ $first = 'nothing happened' ]] && echo "│      │$(repeat ' ' 22)quiet day in history$(repeat ' ' 29)│"
 	############################################################
-	local special=$(grep $day $PROFILE/calender/private.txt 2> /dev/null \
-		| sed "s/^.....//;s/.*/&$(repeat ' ' 70)/;s/\(.\{77\}\).*/\1│/")
 	if [[ $special ]]
 	then
 		echo -n $RED
-		echo -n ├╴speci┼l╶╴day╶─$YELLOW
+		echo -n ├╴special╶╴day╶─$YELLOW
 		echo -n ─╴special╶╴day╶─$GREEN
 		echo -n ─╴special╶╴day╶─$BLUE
 		echo -n ─╴special╶╴day╶─$PURPLE
-		echo -n ─╴special╶╴day╶┤
+		echo -n ─╴special╶╴day╶┤$CYAN
 		echo
-		echo $CYAN"$special"$RESET
+		echo "$special" | sed "$(echo "$format" | tr 9 7)"
 	fi
 	############################################################
+	echo -n $RESET
 	echo -n ╰─
 	echo -n $BG_BR_GREEN$BLACK$BOLD $fulldate $RESET
 	repeat '─' $((72-${#week}-${#fulldate}))

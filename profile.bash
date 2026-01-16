@@ -51,7 +51,7 @@ export GPG_TTY=$(tty)	# github commit signing
 tabs -4
 set +H
 # neofetch 2> /dev/null
-onthisday $(date +%m/%d)
+onthisday
 
 # log 'bash profile activation complete'
 timer session_ms
