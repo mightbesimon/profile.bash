@@ -9,10 +9,10 @@ alias ls='ls -AhFGe'
 alias mv='mv -iv'
 # alias rm='rm -v'
 alias rm='trash'
-alias ds='/bin/rm -v .DS_Store'
+alias ds='command rm -v .DS_Store'
 # alias x='chmod u+x'
 # alias tree='tree -aCFL 8 --filelimit 24 -I .git | tr └ ╰ | sed "s/─ \([^/]*\/\)/──┬╸\1/" | sed "s/─ /───╸/"'
-alias tree='tree -aCFL 8 --filelimit 24 -I .git | sed "s/─ /─╸/"'
+# alias tree='tree -aCFL 8 --filelimit 24 -I .git | sed "s/─ /─╸/"'
 alias python='python3'
 # alias venv='source venv/bin/activate'
 alias reload='source ~/.bash_profile && trap precommand DEBUG'
@@ -24,7 +24,10 @@ alias box="source $PROFILE/box.bash"
 # cat ~/Library/Application\ Support/Code/User/workspaceStorage/*/workspace.json | grep file | sed -E 's/.*"folder": "file:\/\/([^"]+)".*/\1/'
 
 cd() { builtin cd "$@" && ls -AhFG; } # todo, add -q flag to not run ls after cd
-du() { /usr/bin/du -hd 0 $(/bin/ls -AF) | sort -h; } # bug: dir with space, ls for dir/ to indicate dir
+# du() { command du -hd 0 -- * .??* | sort -h; }
+stat() { command stat -x "$@" && echo && GetFileInfo "$@"; }
+tree() { command tree -aCFL 8 --filelimit 24 -I .git "$@" | sed 's/─ /─╸/'; }
+# tree() { command tree -aCFL 8 --filelimit 24 -I .git "$@" | sed 's/─ /─'$RED'╸'$RESET/; }
 # trash() { mv -iv "$@" ~/.Trash; }	# if starts with . prepend h
 todo() { :; }
 mergedir() { todo; }
@@ -39,30 +42,35 @@ profile() { todo; }
 # idea: python llm provider management
 # audit
 # undo
-stat() { /usr/bin/stat -x "$@" && echo && GetFileInfo "$@"; }
+function du
+{
+	[[ -z "$@" ]] && command du -hd 0 -- * .??* | sort -h && return
+	[[ -z "$2" ]] && command du -hd 0 -- "$1"* "$1".??* | sort -h && return
+	command du -h "$@" | sort -h
+}
 function trash
 {
 	for item in "$@"
 	do
-		[[ $item = .DS_Store ]] && /bin/rm -v .DS_Store
+		[[ $item = .DS_Store ]] && command rm -v .DS_Store
 		[[ $item = .* ]] && mv -iv "$item" ~/.Trash/h"$item"
 		mv -iv "$item" ~/.Trash;
 	done
 }
 function pipenv
 {
-	PIPENV_PATH=$(which pipenv)
-	[[ -z $PIPENV_PATH ]] && echo 'pipenv not installed' && return 1
-	[[ -z "$@" ]] && source "$($PIPENV_PATH --venv)/bin/activate" && return
-	[[ $1 = help ]] && $PIPENV_PATH -h && return
-	$PIPENV_PATH "$@"
+	# PIPENV_PATH=$(which pipenv)
+	# [[ -z $PIPENV_PATH ]] && echo 'pipenv not installed' && return 1
+	[[ -z "$@" ]] && source "$(command pipenv --venv)/bin/activate" && return
+	[[ $1 = help ]] && command pipenv -h && return
+	command pipenv "$@"
 }
 function brew
 {
-	BREW_PATH=$(which brew)
-	[[ -z $BREW_PATH ]] && echo 'brew not installed' && return 1
+	# BREW_PATH=$(which brew)
+	# [[ -z $BREW_PATH ]] && echo 'brew not installed' && return 1
 	[[ $1 = tree ]] && brew deps --tree --for-each $(brew leaves) && return
-	$BREW_PATH "$@"
+	command brew "$@"
 }
 function pip
 {
@@ -81,6 +89,10 @@ function venv
 		deactivate ) deactivate;;
 		*) echo 'venv create|activate|delete';;
 	esac
+}
+function quote
+{
+	"$@" | sed 's/^/'$RESET$FAINT'┃ '$RESET/
 }
 
 

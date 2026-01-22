@@ -29,7 +29,7 @@ source $PROFILE/prompt.bash
 #######                    variables                     #######
 ################################################################
 export EDITOR=code
-export BROWSER=none
+# export BROWSER=none
 export TRASH=~/.Trash
 export BASHRC=~/.bash_profile
 # export ARROW=👉
@@ -51,6 +51,8 @@ export GPG_TTY=$(tty)	# github commit signing
 tabs -4
 set +H
 # neofetch 2> /dev/null
+# onthisday | expand | cut -c-$COLUMNS
+# onthisday | sed 's/^/'$FAINT'┃ '$RESET/
 onthisday
 
 # log 'bash profile activation complete'
