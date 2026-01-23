@@ -5,7 +5,7 @@
 ################################################################
 function repeat
 {
-	printf %$2s | tr ' ' "$1"
+	printf '%*s' $2 | sed "s/ /$1/g"
 }
 
 function epochms
