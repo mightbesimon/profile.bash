@@ -79,9 +79,9 @@ function onthisday
 	############################################################
 	echo -n $RESET
 	echo -n ╰
-	echo -n $BG_BR_GREEN$BLACK$BOLD $fulldate $RESET
+	echo -n $BG_GREEN$BLACK$BOLD $fulldate $RESET
 	repeat '─' $((73-${#week}-${#fulldate}))
-	echo -n $BG_BR_YELLOW$BLACK$BOLD $week $RESET
+	echo -n $BG_YELLOW$BLACK$BOLD $week $RESET
 	echo -n ─╯
 	echo $'\n'
 }

@@ -18,6 +18,7 @@ session_ms=$(epochms)
 #######                     imports                      #######
 ################################################################
 source $PROFILE/colour.bash
+[[ $PROFILE_256 ]] && source $PROFILE/colour256.bash
 source $PROFILE/path.bash
 source $PROFILE/alias.bash
 source $PROFILE/functions.bash
