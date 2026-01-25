@@ -3,7 +3,7 @@
 ################################################################
 #######                 quality of life                  #######
 ################################################################
-alias ls='ls -AhFGe'
+alias ls='ls -AhFG'
 # TODO ls with icons and tighter column with
 # TODO ls -l table with box drawing chars
 alias mv='mv -iv'
