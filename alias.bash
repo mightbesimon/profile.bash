@@ -76,9 +76,10 @@ function pip
 {
 	PIP_PATH=$(which pip)
 	[[ -z $PIP_PATH ]] && echo 'not inside virtual environment, use pip3' && return
-	[[ $1 = tree ]] && which pipdeptree \
-		|| (echo 'pipdeptree not installed anywhere' && return) \
-		&& shift && pipdeptree $@ && return
+	# TODO check pipdeptree is in venv
+	# [[ $1 = tree ]] && which pipdeptree \
+	# 	|| (echo 'pipdeptree not installed anywhere' && return) \
+	# 	&& shift && pipdeptree $@ && return
 	$PIP_PATH "$@"
 }
 function venv
