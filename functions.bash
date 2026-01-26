@@ -40,11 +40,16 @@ alias log_show='log_debug debug && log_info info && log_warn warning && log_erro
 ################################################################
 #######                    easter egg                    #######
 ################################################################
+function date_from
+{
+	date -jf %m/%d "$1" "$2" 2> /dev/null || date -d "$1" "$2"
+}
+
 function onthisday
 {
 	local day=${1:-$(date +%m/%d)}
-	local week=$(date -jf %m/%d $day '+WEEK %V')
-	local fulldate=$(LC_TIME=fr_FR.UTF-8 date -jf %m/%d $day '+le %A %d %B')
+	local week=$(date_from $day '+WEEK %V')
+	local fulldate=$(LC_TIME=fr_FR.UTF-8 date_from $day '+le %A %d %B')
 	local format="s/^.....//;s/.*/&$(repeat ' ' 70)/;s/\(.\{79\}\).*/\1│/"
 	local first='nothing happened'
 	local birthday="$(grep $day $PROFILE/calender/birthday.txt 2> /dev/null)"

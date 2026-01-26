@@ -15,7 +15,7 @@ alias ds='command rm -v .DS_Store'
 # alias tree='tree -aCFL 8 --filelimit 24 -I .git | sed "s/─ /─╸/"'
 alias python='python3'
 # alias venv='source venv/bin/activate'
-alias reload='source ~/.bash_profile || source ~/.profile && trap precommand DEBUG'
+# alias reload='source ~/.bash_profile || source ~/.profile && trap precommand DEBUG'
 alias update='git -C $PROFILE pull'
 alias doc=man
 alias box="source $PROFILE/box.bash"
@@ -42,6 +42,12 @@ profile() { todo; }
 # idea: python llm provider management
 # audit
 # undo
+function reload
+{
+	source ~/.bash_profile 2> /dev/null
+	source ~/.profile 2> /dev/null
+	trap precommand DEBUG
+}
 function du
 {
 	[[ -z "$@" ]] && command du -hd 0 -- * .??* | sort -h && return
