@@ -105,7 +105,7 @@ function preprompt
 	((nlinks)) && PS1=$PS1"\[$BG_BLACK$PURPLE\] $nlinks\[$FAINT\] symlinks\[$RESET\]"
 	((nexes )) && PS1=$PS1"\[$BG_RED$BLACK$BOLD\] $nexes\[$RESET$BG_RED$BLACK\] exes\[$RESET\]"
 	PS1=$PS1'\n\[$YELLOW\]$ARROW \[$BLUE\]'
-	# PS1='\[$RESET$FAINT\][\#] \h → \u\[$RESET\]\n'$PS1
+	PS1='\[$RESET$FAINT\][\#] \h → \u\[$RESET\]\n'$PS1
 	PS1="\[\e]2;\w$BRANCH$VENV\a\]"$PS1		# window title
 	PS2='\[$YELLOW$FAINT\]$ARROW \[$BLUE\]'
 }
