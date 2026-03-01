@@ -6,6 +6,7 @@
 alias ls='ls -AhFG'
 # TODO ls with icons and tighter column with
 # TODO ls -l table with box drawing chars
+alias grep='grep --colour=auto'
 alias mv='mv -iv'
 # alias rm='rm -v'
 alias rm='trash'
@@ -91,17 +92,25 @@ function pip
 function venv
 {
 	case $1 in
-		create|init) python3 -m venv venv;;
-		activate   ) source venv/bin/activate;;
-		deactivate ) deactivate;;
-		*) echo 'venv create|activate|delete';;
+		i|init|create)
+			python3 -m venv venv
+			source venv/bin/activate
+			COMMAND='python3 -m venv venv'
+			;;
+		a|activate  ) source venv/bin/activate;;
+		d|deactivate) deactivate;;
+		*) echo 'venv init|create|activate|deactivate';;
 	esac
 }
 function quote
 {
 	"$@" | sed 's/^/'$RESET$FAINT'┃ '$RESET/
 }
-
+function see
+{
+	# TODO if json or yaml, use otree
+	bat "$@" 2> /dev/null || ls "$@"
+}
 
 ################################################################
 #######                     publish                      #######

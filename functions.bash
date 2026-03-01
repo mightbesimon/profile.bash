@@ -6,12 +6,12 @@
 function config()
 {
 	case $1 in
-		bash    ) $EDITOR ~/.bash_profile $PROFILE;;
+		bash    ) $EDITOR ~/.profile $PROFILE;;
 		git     ) $EDITOR ~/.gitconfig ~/.gitignore;;
 		python  ) $EDITOR ~/.config/pycodestyle;;
 		pip     ) $EDITOR ~/.config/pip/pip.conf;;
 		neofetch) $EDITOR ~/.config/neofetch/config.conf;;
-		*) echo bash, git, python, pip, neofetch;;
+		*) echo 'bash|git|python|pip|neofetch';;
 	esac
 }
 
@@ -23,7 +23,7 @@ function log
 		warn*) shift && echo -n $YELLOW;;
 		err* ) shift && echo -n $RED;;
 		crit*) shift && echo -n $PURPLE;;
-		show ) log debug debug && log info info && log warn warning && log error error && log crit critical && return;;
+		show|help ) log debug debug && log info info && log warn warning && log error error && log crit critical && return;;
 		# *) echo ${BLUE}debug$RESET, ${GREEN}info$RESET, ${YELLOW}warn${FAINT}ing$RESET, ${RED}err${FAINT}or$RESET, ${PURPLE}crit${FAINT}ical$RESET;;
 	esac
 	echo $BOLD'┃'$RESET$BG_BR_BLACK "$@" $RESET

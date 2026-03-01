@@ -39,7 +39,7 @@ function exitstatus
 	echo -n $BLACK'┃ '
 	echo -n $BR_WHITE"$trimmed "
 	# echo -n $BG_BLUE$BLACK $(date '+%F %X') $RESET
-	echo -n $BG_BLUE$BLACK $(date '+%FT%X') $RESET
+	echo -n $BG_BLUE$BLACK $(date '+%FT%H:%M:%S') $RESET
 	# echo -n $BG_BLUE$BLACK $(date '+%d.%m.%Y %Hh%M:%S') $RESET
 	echo $BR_BLACK
 	repeat '-' $COLUMNS
@@ -107,7 +107,7 @@ function preprompt
 	PS1=$PS1'\n\[$YELLOW\]$ARROW \[$BLUE\]'
 	PS1='\[$RESET$FAINT\][\#] \h → \u\[$RESET\]\n'$PS1
 	PS1="\[\e]2;\w$BRANCH$VENV\a\]"$PS1		# window title
-	PS2='\[$YELLOW$FAINT\]$ARROW \[$BLUE\]'
+	PS2='\[$YELLOW$FAINT\]$ARROW \[$RESET$BLUE\]'
 }
 
 function precommand
