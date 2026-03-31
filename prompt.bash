@@ -68,10 +68,10 @@ function preprompt
 	VENV=$([ -n "$VIRTUAL_ENV" ] && echo " [$(basename "$VIRTUAL_ENV")]";)
 	DIR=$(dirs)
 	local dotdsstore=$(ls -a | grep -c '^\.DS_Store$')
-	local  ndirs=$(ls -Al | grep -c ^d)
-	local nfiles=$(ls -Al | grep -c ^-)
-	local nlinks=$(ls -Al | grep -c ^l)
-	local  nexes=$(ls -Al | grep -c '^-\S*x')
+	local  ndirs=$(command ls -Al | grep -c ^d)
+	local nfiles=$(command ls -Al | grep -c ^-)
+	local nlinks=$(command ls -Al | grep -c ^l)
+	local  nexes=$(command ls -Al | grep -c '^-\S*x')
 	local padlen=$((65 - ${#DIR}-${#BRANCH}-${#VENV}-${#ndirs}-${#nfiles}))
 	((nlinks    )) && padlen=$((padlen - 10 - ${#nlinks}))
 	((nexes     )) && padlen=$((padlen - 6 - ${#nexes}))
@@ -85,9 +85,9 @@ function preprompt
 
 	# move to ls custom function
 	# and output count socket, pipes
-	local n_privilege_escalations=$(ls -Al | grep -c '^\S*s')
-	local               n_critial=$(ls -Al | grep -c '^\S*S')
-	local          n_world_writes=$(ls -Al | grep -c '^........w.')
+	local n_privilege_escalations=$(command ls -Al | grep -c '^\S*s')
+	local               n_critial=$(command ls -Al | grep -c '^\S*S')
+	local          n_world_writes=$(command ls -Al | grep -c '^........w.')
 	((n_world_writes)) && ((${#DIR} > 1)) \
 	&& log warn $n_world_writes 'world-writable file(s) or director(ies)'
 	((n_privilege_escalations)) && ((${#DIR} > 1)) \

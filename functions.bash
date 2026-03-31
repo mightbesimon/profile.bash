@@ -17,6 +17,8 @@ function config()
 
 function log
 {
+	# TODO -d --debug, -i --info, -w --warn, -e --error, -c --critical
+	# --show --help
 	case $1 in
 		debug) shift && echo -n $BLUE;;
 		info ) shift && echo -n $GREEN;;
@@ -26,7 +28,7 @@ function log
 		show|help ) log debug debug && log info info && log warn warning && log error error && log crit critical && return;;
 		# *) echo ${BLUE}debug$RESET, ${GREEN}info$RESET, ${YELLOW}warn${FAINT}ing$RESET, ${RED}err${FAINT}or$RESET, ${PURPLE}crit${FAINT}ical$RESET;;
 	esac
-	echo $BOLD'┃'$RESET$BG_BR_BLACK "$@" $RESET
+	echo $BOLD'┃'$RESET$BG_BR_BLACK $@ $RESET
 	# echo ▍$RESET$BG_BR_BLACK "$@" $RESET
 }
 

@@ -3,10 +3,15 @@
 ################################################################
 #######                 quality of life                  #######
 ################################################################
-alias ls='ls -AhFG'
+# alias ls='ls -AhF --color'
+which eza &> /dev/null \
+&& alias ls='eza -Ah' \
+|| alias ls='command ls -AhFHD %FT%H:%M:%S --color'
+alias l='command ls -AhFHD %FT%H:%M:%S --color'
 # TODO ls with icons and tighter column with
 # TODO ls -l table with box drawing chars
 alias grep='grep --colour=auto'
+alias which='type -a'
 alias mv='mv -iv'
 # alias rm='rm -v'
 alias rm='trash'
@@ -25,18 +30,16 @@ alias box="source $PROFILE/box.bash"
 # cat ~/Library/Application\ Support/Code/User/workspaceStorage/*/workspace.json | grep file | sed -E 's/.*"folder": "file:\/\/([^"]+)".*/\1/'
 
 cd() { builtin cd "$@" && ls -AhFG; } # todo, add -q flag to not run ls after cd
+cd() { builtin cd "$@" && ls; }
 # du() { command du -hd 0 -- * .??* | sort -h; }
 stat() { command stat -x "$@" && echo && GetFileInfo "$@"; }
 tree() { command tree -aCFL 8 --filelimit 24 -I .git "$@" | sed 's/─ /─╸/'; }
 # tree() { command tree -aCFL 8 --filelimit 24 -I .git "$@" | sed 's/─ /─'$RED'╸'$RESET/; }
-# trash() { mv -iv "$@" ~/.Trash; }	# if starts with . prepend h
 todo() { :; }
 mergedir() { todo; }
 terminal() { todo; } #reload, update
 profile() { todo; }
 # alias term=terminal
-# lm() { ollama run deepseek-r1:14b "$@"; }
-# alias lmclear='rm ~/.ollama/history'
 # see, peak, view
 # list as ls with colours
 # wordlist() english
@@ -59,9 +62,14 @@ function trash
 {
 	for item in "$@"
 	do
-		[[ $item = .DS_Store ]] && command rm -v .DS_Store
-		[[ $item = .* ]] && mv -iv "$item" ~/.Trash/h"$item"
-		mv -iv "$item" ~/.Trash;
+		# [[ $item = .DS_Store ]] && command rm -v .DS_Store
+		# [[ $item = .* ]] && mv -iv "$item" ~/.Trash/DOT"$item"
+		# mv -iv "$item" ~/.Trash;
+		case $item in
+			.DS_Store) command rm -v .DS_Store;;
+			.*) mv -iv "$item" ~/.Trash/DOT"$item";;
+			*) mv -iv "$item" ~/.Trash;;
+		esac
 	done
 }
 function pipenv
@@ -76,8 +84,36 @@ function brew
 {
 	# BREW_PATH=$(which brew)
 	# [[ -z $BREW_PATH ]] && echo 'brew not installed' && return 1
-	[[ $1 = tree ]] && brew deps --tree --for-each $(brew leaves) && return
-	command brew "$@"
+	# [[ $1 = tree ]] && command brew deps --tree --for-each $(command brew leaves) && return
+	# command brew "$@"
+	echo "[$(date '+%FT%H:%M:%S')]" brew $@ >> ~/.brew_history
+	case $1 in
+		tree) HOMEBREW_NO_ENV_HINTS=1 command brew deps --tree --for-each ${2:-$(command brew leaves)} ${@:3};;
+		# needs)
+		# 	command brew leaves | grep $2 1> /dev/null && echo 'package is a leaf' && return
+		# 	for pkg in $(command brew leaves)
+		# 	do command brew deps $pkg | grep $2 1> /dev/null && echo $pkg
+		# 	done
+		# 	;;
+		# build) command brew deps --installed --include-build | grep -E "$(echo ${@:2} | tr ' ' '|')";;
+		needs) brew deps --for-each $(command brew leaves) | grep -E "$(echo ${@:2} | tr ' ' '|')";;
+		installed) command brew list --installed-on-request;;
+		orphans  ) command brew leaves --installed-as-dependency;;
+		poured   ) command brew list --poured-from-bottle;;
+		built    ) command brew list --built-from-source;;
+		dups|mul*) command brew list --multiple --versions;;
+		# tree) command brew deps --tree --for-each $(command brew leaves);;
+		# install|i)
+		# 	echo $(date '+%FT%H:%M:%S') brew install ${@:2} >> ~/.brew_install_history
+		# 	command brew "$@"
+		# 	;;
+		uninstall)
+			command brew uninstall "$@"
+			command brew cleanup -n "$@"
+			echo brew cleanup -n "$@"
+			;;
+		*) command brew "$@";;
+	esac
 }
 function pip
 {
@@ -87,7 +123,7 @@ function pip
 	# [[ $1 = tree ]] && which pipdeptree \
 	# 	|| (echo 'pipdeptree not installed anywhere' && return) \
 	# 	&& shift && pipdeptree $@ && return
-	$PIP_PATH "$@"
+	command pip "$@"
 }
 function venv
 {
