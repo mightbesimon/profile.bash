@@ -32,6 +32,7 @@ source $PROFILE/prompt.bash
 source /opt/homebrew/etc/profile.d/bash_completion.sh
 source /opt/homebrew/completions/bash/brew
 source /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
+source $PROFILE/completions.bash
 
 ################################################################
 #######                    variables                     #######

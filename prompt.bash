@@ -65,7 +65,9 @@ function preprompt
 	exitstatus $?
 	skip_precommand=0
 	BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')
-	VENV=$([ -n "$VIRTUAL_ENV" ] && echo " [$(basename "$VIRTUAL_ENV")]";)
+	# VENV=$([ -n "$VIRTUAL_ENV" ] && echo ' '[$(basename "$VIRTUAL_ENV")] | tr a-z A-Z)
+	VENV=$([ -n "$VIRTUAL_ENV" ] && echo " $(basename "$VIRTUAL_ENV") " | tr a-z A-Z)
+	# VENV=$(basename "$VIRTUAL_ENV" 2> /dev/null | tr a-z A-Z)
 	DIR=$(dirs)
 	local dotdsstore=$(ls -a | grep -c '^\.DS_Store$')
 	local  ndirs=$(command ls -Al | grep -c ^d)
@@ -97,8 +99,10 @@ function preprompt
 
 	# if no branch and pwd short, arrow on same line
 	# PS1=' \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]\n$ARROW \[$BLUE\]'
-	PS1=" \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]"
+	# PS1=" \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]"
+	PS1=" \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$RESET\]"
 	PS1=$PS1$(repeat ' ' $padlen)
+	PS1=$PS1'\[$BG_BLUE$BLACK\]$VENV\[$RESET\]'
 	((dotdsstore)) && PS1=$PS1"\[$BG_BR_BLACK$WHITE$FAINT\].DS_Store\[$RESET$BG_BR_BLACK$BLACK\]┃\[$RESET\]"
 	PS1=$PS1"\[$BG_BR_BLACK$WHITE\] $ndirs\[$FAINT\] dirs\[$RESET\]"
 	PS1=$PS1"\[$BG_BR_BLACK$WHITE\] $nfiles\[$FAINT\] files\[$RESET\]"

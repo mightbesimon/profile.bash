@@ -89,24 +89,24 @@ function brew
 	echo "[$(date '+%FT%H:%M:%S')]" brew $@ >> ~/.brew_history
 	case $1 in
 		tree) HOMEBREW_NO_ENV_HINTS=1 command brew deps --tree --for-each ${2:-$(command brew leaves)} ${@:3};;
-		# needs)
+		needs) command brew uses --installed ${@:2};;
+		builds) command brew uses --installed --inlcude-build ${@:2};;
+		# needs) #
 		# 	command brew leaves | grep $2 1> /dev/null && echo 'package is a leaf' && return
-		# 	for pkg in $(command brew leaves)
+		# 	for pkg in $(command brew leaves) #
 		# 	do command brew deps $pkg | grep $2 1> /dev/null && echo $pkg
 		# 	done
 		# 	;;
+		# needs) command brew deps --for-each $(command brew leaves) | grep -E "$(echo ${@:2} | tr ' ' '|')";;
 		# build) command brew deps --installed --include-build | grep -E "$(echo ${@:2} | tr ' ' '|')";;
-		needs) brew deps --for-each $(command brew leaves) | grep -E "$(echo ${@:2} | tr ' ' '|')";;
 		installed) command brew list --installed-on-request;;
 		orphans  ) command brew leaves --installed-as-dependency;;
 		poured   ) command brew list --poured-from-bottle;;
 		built    ) command brew list --built-from-source;;
 		dups|mul*) command brew list --multiple --versions;;
-		# tree) command brew deps --tree --for-each $(command brew leaves);;
-		# install|i)
-		# 	echo $(date '+%FT%H:%M:%S') brew install ${@:2} >> ~/.brew_install_history
-		# 	command brew "$@"
-		# 	;;
+		disk     ) command du -hd 0 /opt/homebrew/Cellar/* \
+			/Users/*/Library/Caches/Homebrew \
+			/Users/*/Library/Logs/Homebrew | sort -h;;
 		uninstall)
 			command brew uninstall "$@"
 			command brew cleanup -n "$@"
@@ -135,7 +135,7 @@ function venv
 			;;
 		a|activate  ) source venv/bin/activate;;
 		d|deactivate) deactivate;;
-		*) echo 'venv init|create|activate|deactivate';;
+		*) echo 'venv [i]nit|create|[a]ctivate|[d]eactivate';;
 	esac
 }
 function quote
