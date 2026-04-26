@@ -10,7 +10,6 @@ function config()
 		git     ) $EDITOR ~/.gitconfig ~/.gitignore;;
 		python  ) $EDITOR ~/.config/pycodestyle;;
 		pip     ) $EDITOR ~/.config/pip/pip.conf;;
-		neofetch) $EDITOR ~/.config/neofetch/config.conf;;
 		*) echo 'bash|git|python|pip|neofetch';;
 	esac
 }
@@ -20,12 +19,23 @@ function log
 	# TODO -d --debug, -i --info, -w --warn, -e --error, -c --critical
 	# --show --help
 	case $1 in
-		debug) shift && echo -n $BLUE;;
-		info ) shift && echo -n $GREEN;;
-		warn*) shift && echo -n $YELLOW;;
-		err* ) shift && echo -n $RED;;
-		crit*) shift && echo -n $PURPLE;;
-		show|help ) log debug debug && log info info && log warn warning && log error error && log crit critical && return;;
+		debug) shift && echo -n $BLUE ;;
+		imp* ) shift && echo -n $CYAN ;;
+		info ) shift && echo -n $GREEN ;;
+		warn*) shift && echo -n $YELLOW ;;
+		err* ) shift && echo -n $RED ;;
+		crit*) shift && echo -n $PURPLE ;;
+		fatal) echo $RED$BOLD'┃'$RESET$BG_RED$WHITE$BOLD ${@:2} $RESET && return ;;
+		show|help)
+			log important important
+			log debug debug
+			log info info
+			log warn warning
+			log error error
+			log crit critical
+			log fatal FATAL
+			return
+			;;
 		# *) echo ${BLUE}debug$RESET, ${GREEN}info$RESET, ${YELLOW}warn${FAINT}ing$RESET, ${RED}err${FAINT}or$RESET, ${PURPLE}crit${FAINT}ical$RESET;;
 	esac
 	echo $BOLD'┃'$RESET$BG_BR_BLACK $@ $RESET

@@ -9,8 +9,8 @@ function epochms
 }
 function timer
 {
-	printf $FAINT'%2dms' $(($(epochms)-$1))
-	printf -v $1 '%s' $(epochms)
+	printf $FAINT%2dms$RESET $(($(epochms)-$1))
+	printf -v $1 '%s' $(epochms)	# update the new time for the next call
 }
 session_ms=$(epochms)
 
@@ -29,9 +29,10 @@ source $PROFILE/prompt.bash
 ################################################################
 #######                   completions                    #######
 ################################################################
-source /opt/homebrew/etc/profile.d/bash_completion.sh
-source /opt/homebrew/completions/bash/brew
-source /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash
+source /opt/homebrew/completions/bash/brew 2> /dev/null		# brew itself
+source /opt/homebrew/etc/profile.d/bash_completion.sh 2> /dev/null	# brew installed packages
+source /Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash 2> /dev/null	# git
+source $HOME/.local/share/bash-completion/completions/docker 2> /dev/null	# docker and docker compose
 source $PROFILE/completions.bash
 
 ################################################################
@@ -52,17 +53,27 @@ export ARROW=❯
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export PIP_DISABLE_PIP_VERSION_CHECK=1
 export GPG_TTY=$(tty)	# github commit signing
+export HISTSIZE=
+export HISTFILESIZE=
+# export HISTCONTROL=ignoredups:erasedups	# ignore duplicates and overwrite previous
+export HISTIGNORE=ls:'* --help'
+shopt -s histappend				# append to history instead of overwriting
+shopt -s dotglob				# include hidden files in globbing
+shopt -s globstar 2> /dev/null	# allow ** recursive directories matching (for debian)
+# TODO symlink to '~/Library/Application Support/eza'
+export EZA_CONFIG_DIR=~/.config/eza
+export LS_COLORS='ln=35:ex=31:di=34;1'
 
 
 ################################################################
 #######                 MAIN STARTS HERE                 #######
 ################################################################
 tabs -4
-set +H
+# set +H
 # neofetch 2> /dev/null
 onthisday
 
 # log 'bash profile activation complete'
 timer session_ms
-echo $RESET$CYAN$BOLD'┃'$RESET$BG_BR_BLACK bash profile activation complete $RESET
+log important bash profile activation complete $RESET$FAINT$BLUE ${BASH_SOURCE[${#BASH_SOURCE[@]}-1]}
 echo

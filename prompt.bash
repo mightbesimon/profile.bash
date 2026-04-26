@@ -5,17 +5,14 @@
 ################################################################
 function repeat
 {
-	printf '%*s' $2 | sed "s/ /$1/g"
+	# printf %$2s | tr ' ' "$1"
+	printf '%*s' $2 | sed "s/ /$1/g"	# now supports multi char
 }
 
 function epochms
 {
-	perl -MTime::HiRes=time -e "printf '%u', time*1000"
+	perl -MTime::HiRes=time -e "printf '%u', time*1000"	# macos cannot use date -d
 }
-
-# repeat() { printf %$2s | tr ' ' "$1"; }
-# currentbranch() { git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/'; }
-# currentvenv() { [ -n "$VIRTUAL_ENV" ] && echo " [$(basename "$VIRTUAL_ENV")]"; }
 
 function exitstatus
 {
@@ -64,69 +61,108 @@ function preprompt
 {
 	exitstatus $?
 	skip_precommand=0
-	BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')
+	BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')	# TODO use git branch --show-current
+	# BRANCH=" [$(git branch --show-current 2> /dev/null)]"
 	# VENV=$([ -n "$VIRTUAL_ENV" ] && echo ' '[$(basename "$VIRTUAL_ENV")] | tr a-z A-Z)
-	VENV=$([ -n "$VIRTUAL_ENV" ] && echo " $(basename "$VIRTUAL_ENV") " | tr a-z A-Z)
-	# VENV=$(basename "$VIRTUAL_ENV" 2> /dev/null | tr a-z A-Z)
+	VENV=$([ "$VIRTUAL_ENV" ] && echo " $(basename "$VIRTUAL_ENV") " | tr a-z A-Z)
+	# VENV=" $(basename "$VIRTUAL_ENV" 2> /dev/null | tr a-z A-Z) "
 	DIR=$(dirs)
-	local dotdsstore=$(ls -a | grep -c '^\.DS_Store$')
-	local  ndirs=$(command ls -Al | grep -c ^d)
-	local nfiles=$(command ls -Al | grep -c ^-)
-	local nlinks=$(command ls -Al | grep -c ^l)
-	local  nexes=$(command ls -Al | grep -c '^-\S*x')
+	HOST=$(hostname -s)
+	local contents=$(command ls -Al 2> /dev/null)	# TODO display permission denied error
+	local dotdsstore=$(grep -c '.DS_Store$' <<< "$contents")
+	local  ndirs=$(grep -c ^d <<< "$contents")
+	local nfiles=$(grep -c ^- <<< "$contents")
+	local nlinks=$(grep -c ^l <<< "$contents")
+	local  nexes=$(grep -c '^-\S*x' <<< "$contents")
 	local padlen=$((65 - ${#DIR}-${#BRANCH}-${#VENV}-${#ndirs}-${#nfiles}))
 	((nlinks    )) && padlen=$((padlen - 10 - ${#nlinks}))
-	((nexes     )) && padlen=$((padlen - 6 - ${#nexes}))
+	((nexes     )) && padlen=$((padlen -  6 - ${#nexes}))
 	((dotdsstore)) && padlen=$((padlen - 10))
-	((padlen < 0)) && padlen=$((padlen + $COLUMNS - 80))
-	((padlen < 0)) && padlen=$((padlen + $COLUMNS))
-	# ((padlen < 0)) && padlen=$((padlen - $COLUMNS + 80))
-	# while ((padlen < 0))
-	# do padlen=$((padlen + 80))
-	# done
+	local compact=$((padlen < 0))
+	if ((compact))
+	then
+		local hist=$((1 + $(history 1 | cut -wf2)))
+		local padlen=$((61 - ${#hist}-${#HOST}-${#USER}-${#VENV}-${#ndirs}-${#nfiles}))
+		((nlinks    )) && padlen=$((padlen - 10 - ${#nlinks}))
+		((nexes     )) && padlen=$((padlen -  6 - ${#nexes}))
+		((dotdsstore)) && padlen=$((padlen - 10))
+	fi
+	# ((padlen < 0)) && local compact=1 || local compact=0
+	# ((padlen < 0)) && local hist=$(history 1 | cut -wf2)
+	# ((padlen < 0)) && padlen=$((61 - ${#hist}-${#HOST}-${#USER}-${#VENV}-${#ndirs}-${#nfiles}))
+	# ((nlinks    )) && ((compact)) && padlen=$((padlen - 10 - ${#nlinks}))
+	# ((nexes     )) && ((compact)) && padlen=$((padlen -  6 - ${#nexes}))
+	# ((dotdsstore)) && ((compact)) && padlen=$((padlen - 10))
 
-	# move to ls custom function
-	# and output count socket, pipes
-	local n_privilege_escalations=$(command ls -Al | grep -c '^\S*s')
-	local               n_critial=$(command ls -Al | grep -c '^\S*S')
-	local          n_world_writes=$(command ls -Al | grep -c '^........w.')
-	((n_world_writes)) && ((${#DIR} > 1)) \
+	# move to separate function and alias to ls
+	local n_privilege_escalations=$(grep -c '^\S*s' <<< "$contents")
+	local               n_critial=$(grep -c '^\S*S' <<< "$contents")
+	local          n_world_writes=$(grep -c '^........w.' <<< "$contents")
+	((${#DIR} > 1)) && ((n_world_writes)) \
 	&& log warn $n_world_writes 'world-writable file(s) or director(ies)'
-	((n_privilege_escalations)) && ((${#DIR} > 1)) \
+	((${#DIR} > 1)) && ((n_privilege_escalations)) \
 	&& log error $n_privilege_escalations 'file(s) with setuid/setgid bits'
-	((n_critial)) && ((${#DIR} > 1)) \
+	((${#DIR} > 1)) && ((n_critial)) \
 	&& log crit $n_critial 'critical system files with malicious permissions'
 
-	# if no branch and pwd short, arrow on same line
-	# PS1=' \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]\n$ARROW \[$BLUE\]'
-	# PS1=" \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]"
-	PS1=" \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$RESET\]"
+	# # if no branch and pwd short, arrow on same line
+	# # PS1=' \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]\n$ARROW \[$BLUE\]'
+	# # PS1=" \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]"
+	# PS1=" \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$RESET\]"
+	# PS1=$PS1$(repeat ' ' $padlen)
+	# PS1=$PS1'\[$BG_BLUE$BLACK\]$VENV\[$RESET\]'
+	# ((dotdsstore)) && PS1=$PS1"\[$BG_BR_BLACK$WHITE$FAINT\].DS_Store\[$RESET$BG_BR_BLACK$BLACK\]┃\[$RESET\]"
+	# PS1=$PS1"\[$BG_BR_BLACK$WHITE\] $ndirs\[$FAINT\] dirs\[$RESET\]"
+	# PS1=$PS1"\[$BG_BR_BLACK$WHITE\] $nfiles\[$FAINT\] files\[$RESET\]"
+	# ((nlinks)) && PS1=$PS1"\[$BG_BLACK$PURPLE\] $nlinks\[$FAINT\] symlinks\[$RESET\]"
+	# ((nexes )) && PS1=$PS1"\[$BG_RED$BLACK$BOLD\] $nexes\[$RESET$BG_RED$BLACK\] exes\[$RESET\]"
+	# PS1=$PS1'\n\[$YELLOW\]$ARROW \[$BLUE\]'
+	# # PS1='\[$RESET$FAINT\][\#] \h → \u\[$RESET\]\n'$PS1	# command number, hostname, username
+	# PS1="\[\e]2;\w$BRANCH$VENV\a\]"$PS1		# window title
+	# PS2='\[$YELLOW$FAINT\]$ARROW \[$RESET$BLUE\]'
+
+	PS1="\[\e]2;\w$BRANCH$VENV\a\]"								# window title
+	PS1=$PS1'\[$RESET$FAINT\][$HISTCMD] $HOST → $USER\[$RESET\]'	# command number, hostname, username
+	((compact-1)) && PS1=$PS1"\n \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$RESET\]"	# do not sqeeze
 	PS1=$PS1$(repeat ' ' $padlen)
 	PS1=$PS1'\[$BG_BLUE$BLACK\]$VENV\[$RESET\]'
-	((dotdsstore)) && PS1=$PS1"\[$BG_BR_BLACK$WHITE$FAINT\].DS_Store\[$RESET$BG_BR_BLACK$BLACK\]┃\[$RESET\]"
+	((dotdsstore)) && PS1=$PS1"\[$BG_BR_BLACK$WHITE$FAINT\].DS_Store\[$RESET$BG_BR_BLACK$BLACK\]┃\[$RESET\]"	# show if .DS_Store exists
 	PS1=$PS1"\[$BG_BR_BLACK$WHITE\] $ndirs\[$FAINT\] dirs\[$RESET\]"
 	PS1=$PS1"\[$BG_BR_BLACK$WHITE\] $nfiles\[$FAINT\] files\[$RESET\]"
 	((nlinks)) && PS1=$PS1"\[$BG_BLACK$PURPLE\] $nlinks\[$FAINT\] symlinks\[$RESET\]"
 	((nexes )) && PS1=$PS1"\[$BG_RED$BLACK$BOLD\] $nexes\[$RESET$BG_RED$BLACK\] exes\[$RESET\]"
+	((compact)) && PS1=$PS1"\n \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$RESET\]"
 	PS1=$PS1'\n\[$YELLOW\]$ARROW \[$BLUE\]'
-	PS1='\[$RESET$FAINT\][\#] \h → \u\[$RESET\]\n'$PS1
-	PS1="\[\e]2;\w$BRANCH$VENV\a\]"$PS1		# window title
 	PS2='\[$YELLOW$FAINT\]$ARROW \[$RESET$BLUE\]'
 }
 
 function precommand
 {
-	(($skip_precommand)) && return
+	((skip_precommand)) && return
 	[[ $BASH_COMMAND = $PROMPT_COMMAND ]] && skip_exitstatus=1 && return
 	COMMAND=$BASH_COMMAND
 	skip_precommand=1
 	echo -n $RESET
+
+	# sync history across sessions
+	history -a	# append to .bash_history
+	history -n	# read new history from .bash_history
+
 	# SECONDS=0
 	start_ms=$(epochms)
 }
 
+################################################################
+#######                       main                       #######
+################################################################
+
 skip_exitstatus=1
 skip_precommand=1
 
-trap precommand DEBUG
-export PROMPT_COMMAND=preprompt
+# trap precommand DEBUG
+# export PROMPT_COMMAND=preprompt
+[[ -z $(trap -p DEBUG) ]] \
+&& trap precommand DEBUG	# avoid overriding __vsc_preexec_all
+[[ $PROMPT_COMMAND != __vsc_prompt_cmd_original ]] \
+&& export PROMPT_COMMAND=preprompt	# avoid overriding __vsc_prompt_cmd_original
+[[ $PS1 ]] && trap 'exit 0' EXIT	# avoid vscode exit on failed command giving warning

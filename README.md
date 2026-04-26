@@ -1,24 +1,81 @@
-# profile.bash
+# profile.bash #
 
-Personal macOS-friendly Bash profile that sets up colour helpers, a rich prompt, shortcuts, and a few fun extras for everyday development.
+> \[!IMPORTANT]
+> This project has no 'stable' release. If something doesn't work, then just read the error message and fix it.
 
 ![screenshot](assets/screenshot.png)
 
-## Highlights
+## Compatibility ##
+
+Should work with almost any version of macOS (12.7.6 and 26), Darwin (21.6.0), Debian (12 and 13), Ubuntu ()
+
+Works with BSD (default) and GNU (compatible) coreutils
+
+## Branches ##
+
+use the `stash` branch for the most current features
+
+all branches are unstable anyways so you might as well
+
+## Optional dependencies ##
+
+| dependency            | description |
+|-----------------------|-------------|
+| **`eza`**             | a modern day `ls`, `brew install eza`
+| **`brew`**            | this project adds a considerable amount of quality of life improvements to `brew`
+| **`bash-completion`** | `brew install bash-completion`
+
+## Installation ##
+
+```bash
+curl -fsSL https://install.mightbesimon.com/profile.bash | bash
+# just points to https://github.com/mightbesimon/profile.bash/install/install.bash
+```
+
+to pass a custom install path
+
+```bash
+curl -fsSL https://install.mightbesimon.com/profile.bash | bash \
+--path ~/github/profile.bash \
+--branch stash
+```
+
+## Uninstall ##
+
+```bash
+command rm -r $PROFILE
+```
+
+manual installation
+
+```bash
+# other options are
+# /usr/local/profile.bash/			# system install, needs root permissions
+# ~/.local/share/profile.bash/		# shared user local install, if each user needs different versions
+# /opt/profile.bash/				# system install
+install_ms=$(perl -MTime::HiRes=time -e "printf '%u', time*1000")
+PROFILE=/usr/local/profile.bash/	# can use custom path
+git clone -C $(dirname $PROFILE)
+git -C $PROFILE checkout stash
+echo export PROFILE=$PROFILE >> ~/.profile	# can use custom path
+mkdir -p ~/.config/profile.bash
+> ~/.config/profile.bash/config.bash
+source ~/.profile
+timer install_ms
+log info profile.bash installation complete
+# link .inputrc
+ln -s $PROFILE/inputrc "$HOME/.inputrc"
+# link configs
+```
+
+## Highlights ##
 
 - Prompt with command duration, exit status, git branch, and virtualenv awareness (`prompt.bash`).
 - Colour palette exports and background helpers for scripts (`colour.bash`).
 - Quality-of-life aliases for macOS, Python, Git, Node.js, and Homebrew workflows (`alias.bash`, `path.bash`).
 - Handy functions, including `config` for editing dotfiles and the daily `onthisday` easter egg (`functions.bash`).
-- Optional Java/C build helpers and OpenGL runners (`compile.bash`).
 
-## Requirements
-
-- Bash 5+ (default on macOS 12+, works elsewhere with minor tweaks).
-- Common BSD userland tools (`grep`, `sed`, `perl`) and optional extras: `neofetch`, `tree`, `gcc`, `javac`.
-- macOS Terminal (or iTerm) if you want the bundled `Mariana.terminal` theme.
-
-## Quick Start
+## Quick Start ##
 
 ```bash
 PROFILE=~/github/profile.bash
@@ -36,18 +93,18 @@ source ~/.bash_profile
 
 That will reload your shell with the new prompt, colours, and aliases. Use a different `PROFILE` path if you prefer another location.
 
-## Updating & Removal
+## Updating & Removal ##
 
 - Pull the latest changes at any time with `update` (alias for `git -C $PROFILE pull`).
 - To remove the profile, delete the clone and remove the `PROFILE` lines from `~/.bash_profile`. There is also an `install/uninstall.bash` script if you prefer an automated cleanup.
 
-## Customising
+## Customising ##
 
 - Edit `alias.bash` or `functions.bash` to add your own shortcuts.
 - Adjust environment variables, default editors, or prompt pieces in `profile.bash` and `prompt.bash`.
 - Add language-specific paths in `path.bash`; Homebrew and common IDEs are pre-configured.
 
-## Repository Layout
+## Repository Layout ##
 
 ```
 profile.bash/           Main entry point sourced from your shell

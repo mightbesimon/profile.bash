@@ -5,3 +5,7 @@ echo $UNDERLINE'▏    2. xxxx    ▕'$RESET
 echo $UNDERLINE'▏    3. xxxx    ▕'$RESET
 echo $UNDERLINE'▏    4. xxxx    ▕'$RESET
 echo
+
+echo ┌──────────────┐
+echo │ text message ▐
+echo └▄▄▄▄▄▄▄▄▄▄▄▄▄▄▟
