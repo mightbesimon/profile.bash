@@ -61,7 +61,7 @@ function onthisday
 {
 	local day=${1:-$(date +%m/%d)}
 	local week=$(date_from $day '+WEEK %V')
-	local fulldate=$(LC_TIME=fr_FR.UTF-8 date_from $day '+le %A %d %B')
+	local fulldate=$(LC_TIME=fr_FR.UTF-8 date_from $day '+%A %d %B %Y' | tr A-Z a-z)
 	local format="s/^.....//;s/.*/&$(repeat ' ' 70)/;s/\(.\{79\}\).*/\1│/"
 	local first='nothing happened'
 	local birthday="$(grep $day $PROFILE/calender/birthday.txt 2> /dev/null)"

@@ -17,8 +17,8 @@ alias eza='eza -AF --links --git --time-style=relative --no-user'
 # TODO ls with icons and tighter column with
 # TODO ls -l table with box drawing chars
 alias grep='grep --colour=auto'
-alias which='type -a'
 alias type='type -a'
+alias which='type -a'
 alias mv='mv -iv'
 alias rm='trash'
 alias rmf='command rm -rv'
@@ -43,7 +43,7 @@ cd() {
 	|| log error 'ls permission denied'
 }
 # du() { command du -hd 0 -- * .??* | sort -h; }
-stat() { command stat -x "$@" && echo -n $CYAN && GetFileInfo "$@" 2> /dev/null; }
+stat() { command stat -xt %FT%H:%M:%S "$@" && echo -n $CYAN && GetFileInfo "$@" 2> /dev/null; }
 tree() { command tree -aCFL 8 --filelimit 24 -I .git "$@" | sed 's/─ /─╸/'; }
 # tree() { command tree -aCFL 8 --filelimit 24 -I .git "$@" | sed 's/─ /─'$RED'╸'$RESET/; }
 todo() { :; }
@@ -170,7 +170,7 @@ function see
 {
 	[[ $2 ]] && echo one at a time please && return
 	case $1 in
-		*.json|*.yaml|*.yml) otree $1;;
+		*.json|*.yaml|*.yml|*.toml|*.xml|*.hcl|*.jsonl) otree $1;;
 		*.plist) plutil -p $1;;
 		*.csv) csview -w 80 -H -t;;
 		*.zip) unzip -l $1;;

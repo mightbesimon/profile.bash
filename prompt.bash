@@ -49,9 +49,13 @@ function formatmilliseconds
 	local minutes=$((($1 % 3600000) / 60000))
 	local seconds=$((($1 % 60000) / 1000))
 	local milliseconds=$(printf '%03u' $(($1 % 1000)))
-	local output=$seconds.${milliseconds}s
-	((minutes > 0)) && output="${minutes}m $output" && ((hours > 0)) && output="${hours}h $output"
-	echo $output
+	# local output=$seconds.${milliseconds}s
+	# ((minutes)) && output="${minutes}m $output" && ((hours)) && output="${hours}h $output"
+	# # BUG 1h 0m 1s would display as 1s
+	# echo $output
+	((hours)) && echo -n $hours'h '
+	((minutes)) && echo -n $minutes'm '
+	echo $seconds.$milliseconds's'
 }
 
 ################################################################
@@ -64,7 +68,7 @@ function preprompt
 	BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')	# TODO use git branch --show-current
 	# BRANCH=" [$(git branch --show-current 2> /dev/null)]"
 	# VENV=$([ -n "$VIRTUAL_ENV" ] && echo ' '[$(basename "$VIRTUAL_ENV")] | tr a-z A-Z)
-	VENV=$([ "$VIRTUAL_ENV" ] && echo " $(basename "$VIRTUAL_ENV") " | tr a-z A-Z)
+	VENV=$([ "$VIRTUAL_ENV" ] && tr a-z A-Z <<< " $(basename "$VIRTUAL_ENV") ")
 	# VENV=" $(basename "$VIRTUAL_ENV" 2> /dev/null | tr a-z A-Z) "
 	DIR=$(dirs)
 	HOST=$(hostname -s)
@@ -156,13 +160,22 @@ function precommand
 #######                       main                       #######
 ################################################################
 
-skip_exitstatus=1
-skip_precommand=1
+# skip_exitstatus=1
+# skip_precommand=1
 
-# trap precommand DEBUG
-# export PROMPT_COMMAND=preprompt
-[[ -z $(trap -p DEBUG) ]] \
-&& trap precommand DEBUG	# avoid overriding __vsc_preexec_all
-[[ $PROMPT_COMMAND != __vsc_prompt_cmd_original ]] \
-&& export PROMPT_COMMAND=preprompt	# avoid overriding __vsc_prompt_cmd_original
-[[ $PS1 ]] && trap 'exit 0' EXIT	# avoid vscode exit on failed command giving warning
+# # trap precommand DEBUG
+# # export PROMPT_COMMAND=preprompt
+# [[ -z $(trap -p DEBUG) ]] && trap precommand DEBUG	# avoid overriding __vsc_preexec_all
+# [[ $PROMPT_COMMAND != __vsc_prompt_cmd_original ]] && export PROMPT_COMMAND=preprompt	# avoid overriding __vsc_prompt_cmd_original
+# [[ $PS1 ]] && trap 'exit 0' EXIT	# avoid vscode exit on failed command giving warning
+
+
+function initprompt
+{
+	skip_exitstatus=1
+	skip_precommand=1
+
+	[[ -z $(trap -p DEBUG) ]] && trap precommand DEBUG	# avoid overriding __vsc_preexec_all
+	[[ $PROMPT_COMMAND != __vsc_prompt_cmd_original ]] && export PROMPT_COMMAND=preprompt	# avoid overriding __vsc_prompt_cmd_original
+	[[ $PS1 ]] && trap 'exit 0' EXIT	# avoid vscode exit on failed command giving warning
+}

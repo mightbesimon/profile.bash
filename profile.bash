@@ -77,3 +77,6 @@ onthisday
 timer session_ms
 log important bash profile activation complete $RESET$FAINT$BLUE ${BASH_SOURCE[${#BASH_SOURCE[@]}-1]}
 echo
+
+initprompt
+export PROFILE_LOADED=1
