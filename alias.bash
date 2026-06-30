@@ -12,8 +12,8 @@ alias ll='ls -l --git-repos'
 # alias ld='ls -l --sort=size'	# eza --sort=size
 alias lt='ls --tree --level=2'		# eza --tree --level=2
 alias eza='eza -AF --links --git --time-style=relative --no-user'
-[[ $TERM = *ghostty ]] && alias ls='eza --colour-scale=all --icons'
-[[ $TERM_PROGRAM = vscode ]] && alias ls='eza --colour-scale=all --icons'
+[[ $TERM = *ghostty ]] && alias eza='eza --colour-scale=all --icons'
+[[ $TERM_PROGRAM = vscode ]] && alias eza='eza --colour-scale=all --icons'
 # TODO ls with icons and tighter column with
 # TODO ls -l table with box drawing chars
 alias grep='grep --colour=auto'
@@ -107,7 +107,7 @@ function brew
 	case $1 in
 		tree) HOMEBREW_NO_ENV_HINTS=1 command brew deps --tree --for-each ${2:-$(command brew leaves)} ${@:3};;
 		needs) command brew uses --installed ${@:2};;
-		builds) command brew uses --installed --inlcude-build ${@:2};;
+		builds) command brew uses --installed --include-build ${@:2};;
 		# needs) #
 		# 	command brew leaves | grep $2 1> /dev/null && echo 'package is a leaf' && return
 		# 	for pkg in $(command brew leaves) #
@@ -135,7 +135,7 @@ function brew
 }
 function pip
 {
-	PIP_PATH=$(which pip)
+	PIP_PATH=$(command which pip)
 	[[ -z $PIP_PATH ]] && echo 'not inside virtual environment, use pip3' && return
 	# TODO check pipdeptree is in venv
 	# [[ $1 = tree ]] && which pipdeptree \
@@ -168,32 +168,137 @@ function quote
 }
 function see
 {
-	[[ $2 ]] && echo one at a time please && return
+	[[ $2 ]] && log warning one at a time please && return
 	case $1 in
-		*.json|*.yaml|*.yml|*.toml|*.xml|*.hcl|*.jsonl) otree $1;;
-		*.plist) plutil -p $1;;
+		*.json|*.yaml|*.yml|*.toml|*.xml|*.hcl|*.jsonl) otree "$1";;
+		*.plist) plutil -p "$1";;
 		*.csv) csview -w 80 -H -t;;
-		*.zip) unzip -l $1;;
-		*) bat $1 2> /dev/null || ls -l $1;;
+		*.zip) unzip -l "$1";;
+		*) bat "$1" 2> /dev/null || ls -l "$1";;
 	esac
 	# bat "$@" 2> /dev/null || ls -l "$@";;
 }
+function key
+{
+	security find-generic-password -s $1 -w
+}
+function transcribe
+{
+	curl -X POST https://api.openai.com/v1/audio/transcriptions \
+		--header "Authorization: Bearer $(key OPENAI_API_KEY)" \
+		--header 'Content-Type: multipart/form-data' \
+		--no-buffer --no-progress-meter \
+		--form file=@"$1" \
+		--form model=gpt-4o-transcribe-diarize \
+		--form response_format=diarized_json \
+		--form chunking_strategy=auto \
+		--form language=${2:-en} \
+		--form stream=true \
+	| grep --line-buffered '^data: {' \
+	| sed -u 's/^data: //' \
+	| jq -r --unbuffered \
+		'select(.type == "transcript.text.segment")
+		| "speaker \(.speaker): \(.text)"' \
+	| tee ${1%.*}_transcribed.txt \
+	&& log info saved to file ${1%.*}_transcribed.txt
+}
+function llm
+{
+	curl -X POST https://api.openai.com/v1/responses \
+		--header "Authorization: Bearer $(key OPENAI_API_KEY)" \
+		--header 'Content-Type: application/json' \
+		--no-buffer --no-progress-meter \
+		--data '{
+			"model": "gpt-5.4-mini",
+			"stream": true,
+			"input": [
+				{"role": "system",    "content": "'"$instruction"'" },
+				{"role": "developer", "content":  '"$context"'      },
+				{"role": "user",      "content": "'"$user_prompt"'" }
+			]}' \
+	| grep --line-buffered '^data:' \
+	| sed -u 's/^data: //' \
+	| jq -rj --unbuffered \
+		'select(.type == "response.output_text.delta")
+		| .delta'
+	echo
+}
 function ask
 {
-	# TODO sends $@ to llm with custom prompt instructions and outputs response, maybe with option to execute response as command
-	local instruction='
+	local context=$([ -t 0 ] && echo '""' || jq -Rs .)
+	local user_prompt="$@"
+	local instruction="$(tr '\t\n' ' ' <<< '
+	You are an assistance inside a bash terminal.
+	Do not use markdown format, use ansi colour codes only for important or code example.
 	Give an executive answer with minimal explanation,
 	and if the answer is a command, give explanation of the flags.
 	You can use bullet points if needed, but keep the answer concise.
-	Never ask for clarification, just give the best answer you can with the information provided.
-	Keep answers to a maximum of 24 lines. Each line should be less than 80 characters.
-	If you need to provide a longer answer, consider only the most important answer or providing a summary or skip the explanation.'
-	local user_prompt="$@"
-	[ -t 0 ] || local context=$(< /dev/stdin)
-	echo "instruction: $instruction"
-	echo "context: $context"
-	echo "question: $user_prompt"
-	echo "question: $user_prompt"
+	Never ask for clarification,
+	just give the best answer you can with the information provided.
+	Keep answers to a maximum of 24 lines.
+	Each line should be less than 80 characters.
+	If you need to provide a longer answer,
+	consider only the most important answer
+	or providing a summary or skip the explanation.
+	')"
+	curl -X POST https://api.openai.com/v1/responses \
+		--header "Authorization: Bearer $(key OPENAI_API_KEY)" \
+		--header 'Content-Type: application/json' \
+		--no-buffer --no-progress-meter \
+		--data '{
+			"model": "gpt-5.4-mini",
+			"stream": true,
+			"input": [
+				{"role": "system",    "content": "'"$instruction"'" },
+				{"role": "developer", "content":  '"$context"'      },
+				{"role": "user",      "content": "'"$user_prompt"'" }
+			]}' \
+	| grep --line-buffered '^data:' \
+	| sed -u 's/^data: //' \
+	| jq -rj --unbuffered \
+		'select(.type == "response.output_text.delta")
+		| .delta'
+	echo
+}
+function translate
+{
+	curl -X POST https://api.openai.com/v1/responses \
+		--header "Authorization: Bearer $(key OPENAI_API_KEY)" \
+		--header 'Content-Type: application/json' \
+		--no-buffer --no-progress-meter \
+		--data '{
+			"model": "gpt-5.4-mini",
+			"stream": true,
+			"input": [
+				{"role": "system", "content": "translate to en_NZ" },
+				{"role": "user",   "content": '"$([ -t 0 ] && echo \"$@\" || jq -Rs .)"' }
+			]}' \
+	| grep --line-buffered '^data:' \
+	| sed -u 's/^data: //' \
+	| jq -rj --unbuffered \
+		'select(.type == "response.output_text.delta")
+		| .delta'
+	echo
+}
+function fr
+{
+	curl -X POST https://api.openai.com/v1/responses \
+		--header "Authorization: Bearer $(key OPENAI_API_KEY)" \
+		--header 'Content-Type: application/json' \
+		--no-buffer --no-progress-meter \
+		--data '{
+			"model": "gpt-5.4-mini",
+			"stream": true,
+			"input": [
+				{"role": "system", "content": "translate to fr_FR" },
+				{"role": "user",   "content": '"$([ -t 0 ] && echo \"$@\" || jq -Rs .)"' }
+			]}' \
+	| grep --line-buffered '^data:' \
+	| sed -u 's/^data: //' \
+	| jq -rj --unbuffered \
+		'select(.type == "response.output_text.delta")
+		| .delta'
+	echo
 }
 
 ################################################################

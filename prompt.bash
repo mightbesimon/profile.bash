@@ -58,6 +58,28 @@ function formatmilliseconds
 	echo $seconds.$milliseconds's'
 }
 
+function dircheck
+{
+	local contents=$(command ls -Al 2> /dev/null)
+	local world_writes=$(grep -c '^........w.' <<< "$contents")
+	local  escalations=$(grep -c '^\S*s' <<< "$contents")
+	local      critial=$(grep -c '^\S*S' <<< "$contents")
+
+	((${#DIR} > 1)) && ((world_writes)) \
+	&& log warn $world_writes 'world-writable file(s) or director(ies), possible access control risk' \
+	&& grep '^........w.' <<< "$contents"
+
+	((${#DIR} > 1)) && ((escalations)) \
+	&& log error $escalations 'file(s) with setuid/setgid bits, possible privilege escalation risk' \
+	&& grep '^\S*s' <<< "$contents"
+
+	((${#DIR} > 1)) && ((n_critial)) \
+	&& log crit $critial 'critical system files with malicious permissions' \
+	&& grep '^\S*S' <<< "$contents"
+
+	return 0
+}
+
 ################################################################
 #######                       main                       #######
 ################################################################
@@ -65,8 +87,20 @@ function preprompt
 {
 	exitstatus $?
 	skip_precommand=0
+	local git_ms=$(epochms)
+	git branch 2> /dev/null
+	timer git_ms
+	log warning git branch timer
+	local sed_ms=$(epochms)
+	echo | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/' 1> /dev/null
+	timer sed_ms
+	log warning sed timer
+	local preprompt_ms=$(epochms)
 	BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')	# TODO use git branch --show-current
 	# BRANCH=" [$(git branch --show-current 2> /dev/null)]"
+	(( $(epochms) - preprompt_ms > 999 )) \
+	&& timer preprompt_ms \
+	&& log warning preprompt timer exceeded 1s
 	# VENV=$([ -n "$VIRTUAL_ENV" ] && echo ' '[$(basename "$VIRTUAL_ENV")] | tr a-z A-Z)
 	VENV=$([ "$VIRTUAL_ENV" ] && tr a-z A-Z <<< " $(basename "$VIRTUAL_ENV") ")
 	# VENV=" $(basename "$VIRTUAL_ENV" 2> /dev/null | tr a-z A-Z) "
@@ -98,16 +132,7 @@ function preprompt
 	# ((nexes     )) && ((compact)) && padlen=$((padlen -  6 - ${#nexes}))
 	# ((dotdsstore)) && ((compact)) && padlen=$((padlen - 10))
 
-	# move to separate function and alias to ls
-	local n_privilege_escalations=$(grep -c '^\S*s' <<< "$contents")
-	local               n_critial=$(grep -c '^\S*S' <<< "$contents")
-	local          n_world_writes=$(grep -c '^........w.' <<< "$contents")
-	((${#DIR} > 1)) && ((n_world_writes)) \
-	&& log warn $n_world_writes 'world-writable file(s) or director(ies)'
-	((${#DIR} > 1)) && ((n_privilege_escalations)) \
-	&& log error $n_privilege_escalations 'file(s) with setuid/setgid bits'
-	((${#DIR} > 1)) && ((n_critial)) \
-	&& log crit $n_critial 'critical system files with malicious permissions'
+	# [[ $(dircheck) ]] && log warning dircheck
 
 	# # if no branch and pwd short, arrow on same line
 	# # PS1=' \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$BLUE\]$VENV\[$RESET\]\n$ARROW \[$BLUE\]'
@@ -127,7 +152,7 @@ function preprompt
 
 	PS1="\[\e]2;\w$BRANCH$VENV\a\]"								# window title
 	PS1=$PS1'\[$RESET$FAINT\][$HISTCMD] $HOST → $USER\[$RESET\]'	# command number, hostname, username
-	((compact-1)) && PS1=$PS1"\n \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$RESET\]"	# do not sqeeze
+	((compact-1)) && PS1=$PS1"\n$APPLE \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$RESET\]"	# do not sqeeze
 	PS1=$PS1$(repeat ' ' $padlen)
 	PS1=$PS1'\[$BG_BLUE$BLACK\]$VENV\[$RESET\]'
 	((dotdsstore)) && PS1=$PS1"\[$BG_BR_BLACK$WHITE$FAINT\].DS_Store\[$RESET$BG_BR_BLACK$BLACK\]┃\[$RESET\]"	# show if .DS_Store exists
@@ -135,7 +160,7 @@ function preprompt
 	PS1=$PS1"\[$BG_BR_BLACK$WHITE\] $nfiles\[$FAINT\] files\[$RESET\]"
 	((nlinks)) && PS1=$PS1"\[$BG_BLACK$PURPLE\] $nlinks\[$FAINT\] symlinks\[$RESET\]"
 	((nexes )) && PS1=$PS1"\[$BG_RED$BLACK$BOLD\] $nexes\[$RESET$BG_RED$BLACK\] exes\[$RESET\]"
-	((compact)) && PS1=$PS1"\n \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$RESET\]"
+	((compact)) && PS1=$PS1"\n$APPLE \[$BOLD$PURPLE\]\w\[$GREEN\]$BRANCH\[$RESET\]"
 	PS1=$PS1'\n\[$YELLOW\]$ARROW \[$BLUE\]'
 	PS2='\[$YELLOW$FAINT\]$ARROW \[$RESET$BLUE\]'
 }
@@ -175,7 +200,7 @@ function initprompt
 	skip_exitstatus=1
 	skip_precommand=1
 
-	[[ -z $(trap -p DEBUG) ]] && trap precommand DEBUG	# avoid overriding __vsc_preexec_all
 	[[ $PROMPT_COMMAND != __vsc_prompt_cmd_original ]] && export PROMPT_COMMAND=preprompt	# avoid overriding __vsc_prompt_cmd_original
+	[[ -z $(trap -p DEBUG) ]] && trap precommand DEBUG	# avoid overriding __vsc_preexec_all
 	[[ $PS1 ]] && trap 'exit 0' EXIT	# avoid vscode exit on failed command giving warning
 }

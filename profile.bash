@@ -9,7 +9,7 @@ function epochms
 }
 function timer
 {
-	printf $FAINT%2dms$RESET $(($(epochms)-$1))
+	printf $FAINT%3dms$RESET $(($(epochms)-$1))
 	printf -v $1 '%s' $(epochms)	# update the new time for the next call
 }
 session_ms=$(epochms)
@@ -42,9 +42,11 @@ export EDITOR=code
 export BROWSER=none
 export TRASH=~/.Trash
 export BASHRC=~/.bash_profile
-# export ARROW=👉
-# export ARROW=→
+
+[[ $(uname) = Darwin ]] && \
+export APPLE= || export APPLE=⌘
 export ARROW=❯
+# export ARROW=→
 
 
 ################################################################
@@ -56,7 +58,7 @@ export GPG_TTY=$(tty)	# github commit signing
 export HISTSIZE=
 export HISTFILESIZE=
 # export HISTCONTROL=ignoredups:erasedups	# ignore duplicates and overwrite previous
-export HISTIGNORE=ls:'* --help'
+export HISTIGNORE=ls:'* --help':'ask *':'translate *':'fr *'
 shopt -s histappend				# append to history instead of overwriting
 shopt -s dotglob				# include hidden files in globbing
 shopt -s globstar 2> /dev/null	# allow ** recursive directories matching (for debian)
@@ -76,7 +78,18 @@ onthisday
 # log 'bash profile activation complete'
 timer session_ms
 log important bash profile activation complete $RESET$FAINT$BLUE ${BASH_SOURCE[${#BASH_SOURCE[@]}-1]}
-echo
+# echo
 
 initprompt
 export PROFILE_LOADED=1
+
+timer session_ms
+log debug initprompt timer
+
+# temp
+preprompt
+skip_exitstatus=1
+skip_precommand=1
+timer session_ms
+log debug preprompt timer
+echo

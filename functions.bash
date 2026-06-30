@@ -19,21 +19,21 @@ function log
 	# TODO -d --debug, -i --info, -w --warn, -e --error, -c --critical
 	# --show --help
 	case $1 in
-		debug) shift && echo -n $BLUE ;;
-		imp* ) shift && echo -n $CYAN ;;
-		info ) shift && echo -n $GREEN ;;
-		warn*) shift && echo -n $YELLOW ;;
-		err* ) shift && echo -n $RED ;;
-		crit*) shift && echo -n $PURPLE ;;
-		fatal) echo $RED$BOLD'┃'$RESET$BG_RED$WHITE$BOLD ${@:2} $RESET && return ;;
+		-d|debug) shift && echo -n $BLUE ;;
+		   imp* ) shift && echo -n $CYAN ;;
+		-i|info ) shift && echo -n $GREEN ;;
+		-w|warn*) shift && echo -n $YELLOW ;;
+		-e|err* ) shift && echo -n $RED ;;
+		-c|crit*) shift && echo -n $PURPLE ;;
+		-f|fatal) echo $RED$BOLD'┃'$RESET$BG_RED$WHITE$BOLD ${@:2} $RESET && return ;;
 		show|help)
 			log important important
-			log debug debug
-			log info info
-			log warn warning
-			log error error
-			log crit critical
-			log fatal FATAL
+			log -d debug
+			log -i info
+			log -w warning
+			log -e error
+			log -c critical
+			log -f FATAL
 			return
 			;;
 		# *) echo ${BLUE}debug$RESET, ${GREEN}info$RESET, ${YELLOW}warn${FAINT}ing$RESET, ${RED}err${FAINT}or$RESET, ${PURPLE}crit${FAINT}ical$RESET;;
@@ -47,7 +47,6 @@ alias log_info='echo -n $GREEN && log'
 alias log_warn='echo -n $YELLOW && log'
 alias log_error='echo -n $RED && log'
 alias log_crit='echo -n $PURPLE && log'
-alias log_show='log_debug debug && log_info info && log_warn warning && log_error error && log_crit critial'
 
 ################################################################
 #######                    easter egg                    #######
@@ -64,10 +63,10 @@ function onthisday
 	local fulldate=$(LC_TIME=fr_FR.UTF-8 date_from $day '+%A %d %B %Y' | tr A-Z a-z)
 	local format="s/^.....//;s/.*/&$(repeat ' ' 70)/;s/\(.\{79\}\).*/\1│/"
 	local first='nothing happened'
-	local birthday="$(grep $day $PROFILE/calender/birthday.txt 2> /dev/null)"
-	local computer="$(grep $day $PROFILE/calender/computer.txt 2> /dev/null)"
-	local  history="$(grep $day $PROFILE/calender/history.txt  2> /dev/null)"
-	local  special="$(grep $day $PROFILE/calender/private.txt  2> /dev/null)"
+	local birthday="$(grep $day $PROFILE/calendar/birthday.txt 2> /dev/null)"
+	local computer="$(grep $day $PROFILE/calendar/computer.txt 2> /dev/null)"
+	local  history="$(grep $day $PROFILE/calendar/history.txt  2> /dev/null)"
+	local  special="$(grep $day $PROFILE/calendar/private.txt  2> /dev/null)"
 	[[ $birthday ]] && first='birthday'
 	[[ $history  ]] && first='history'
 	[[ $computer ]] && first='computer history'
