@@ -9,3 +9,11 @@ echo
 echo ┌──────────────┐
 echo │ text message ▐
 echo └▄▄▄▄▄▄▄▄▄▄▄▄▄▄▟
+echo
+echo ┌──────────────┐
+echo ▌ text message ▐
+echo ▙▄▄▄▄▄▄▄▄▄▄▄▄▄▄▟
+echo
+echo ┌──────┐
+echo ▌ exit ▐
+echo ▙▄▄▄▄▄▄▟

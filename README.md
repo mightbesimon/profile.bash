@@ -21,8 +21,9 @@ all branches are unstable anyways so you might as well
 
 | dependency            | description |
 |-----------------------|-------------|
-| **`eza`**             | a modern day `ls`, `brew install eza`
 | **`brew`**            | this project adds a considerable amount of quality of life improvements to `brew`
+| **`eza`**             | colourful `ls`, `brew install eza`
+| **`bat`**             | colourful `cat`, `brew install bat`
 | **`bash-completion`** | `brew install bash-completion`
 
 ## Installation ##

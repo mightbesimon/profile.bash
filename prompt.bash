@@ -87,20 +87,15 @@ function preprompt
 {
 	exitstatus $?
 	skip_precommand=0
-	local git_ms=$(epochms)
-	git branch 2> /dev/null
-	timer git_ms
-	log warning git branch timer
-	local sed_ms=$(epochms)
-	echo | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/' 1> /dev/null
-	timer sed_ms
-	log warning sed timer
 	local preprompt_ms=$(epochms)
+	command ls -Al 1> /dev/null 2> /dev/null
+	timer preprompt_ms
+	log warning preprompt ls timer
+	[[ -d .git ]]
+	timer preprompt_ms
+	log warning preprompt .git timer
 	BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')	# TODO use git branch --show-current
 	# BRANCH=" [$(git branch --show-current 2> /dev/null)]"
-	(( $(epochms) - preprompt_ms > 999 )) \
-	&& timer preprompt_ms \
-	&& log warning preprompt timer exceeded 1s
 	# VENV=$([ -n "$VIRTUAL_ENV" ] && echo ' '[$(basename "$VIRTUAL_ENV")] | tr a-z A-Z)
 	VENV=$([ "$VIRTUAL_ENV" ] && tr a-z A-Z <<< " $(basename "$VIRTUAL_ENV") ")
 	# VENV=" $(basename "$VIRTUAL_ENV" 2> /dev/null | tr a-z A-Z) "
