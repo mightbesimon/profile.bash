@@ -17,15 +17,15 @@ function epochms
 function exitstatus
 {
 	(($skip_exitstatus)) && skip_exitstatus=0 && return
-	(($1 == 0)) && bg=$BG_GREEN || bg=$BG_RED
-	(($1 == 0)) && chr=✓ || chr=✗
+	local end_ms=$(epochms)
+	(($1)) && local chr=✗ bg=$BG_RED \
+	       || local chr=✓ bg=$BG_GREEN
+	LASTCMD=$COMMAND
 
 	local elapsed=$(formatmilliseconds $(($(epochms) - $start_ms)))
-	# local padlen=$((40-${#SECONDS}-${#1}-${#COMMAND}))
 	local escaped=${COMMAND//$'\n'/\\n}
 	local padlen=$((43-${#elapsed}-${#1}-${#escaped}))
 	local padded=$escaped$(repeat ' ' $padlen)
-	# local trimlen=$((40-${#1}-${#SECONDS}))
 	local trimlen=$((43-${#1}-${#elapsed}))
 	local trimmed=$(head -c $trimlen <<< "$padded")
 
@@ -35,7 +35,7 @@ function exitstatus
 	echo -n $WHITE'exit='$BR_WHITE$1' '
 	echo -n $BLACK'┃ '
 	echo -n $BR_WHITE"$trimmed "
-	# echo -n $BG_BLUE$BLACK $(date '+%F %X') $RESET
+	# echo -n $BG_BLUE$BLACK $(date '+%F %X') $RESET	# debian has no %X
 	echo -n $BG_BLUE$BLACK $(date '+%FT%H:%M:%S') $RESET
 	# echo -n $BG_BLUE$BLACK $(date '+%d.%m.%Y %Hh%M:%S') $RESET
 	echo $BR_BLACK
@@ -87,14 +87,7 @@ function preprompt
 {
 	exitstatus $?
 	skip_precommand=0
-	local preprompt_ms=$(epochms)
-	command ls -Al 1> /dev/null 2> /dev/null
-	timer preprompt_ms
-	log warning preprompt ls timer
-	[[ -d .git ]]
-	timer preprompt_ms
-	log warning preprompt .git timer
-	BRANCH=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')	# TODO use git branch --show-current
+	BRANCH=$([[ -d .git ]] && git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ [\1]/')	# TODO use git branch --show-current
 	# BRANCH=" [$(git branch --show-current 2> /dev/null)]"
 	# VENV=$([ -n "$VIRTUAL_ENV" ] && echo ' '[$(basename "$VIRTUAL_ENV")] | tr a-z A-Z)
 	VENV=$([ "$VIRTUAL_ENV" ] && tr a-z A-Z <<< " $(basename "$VIRTUAL_ENV") ")

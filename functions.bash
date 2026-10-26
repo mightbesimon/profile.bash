@@ -6,7 +6,7 @@
 function config()
 {
 	case $1 in
-		bash    ) $EDITOR ~/.profile $PROFILE;;
+		bash    ) $EDITOR $PROFILE;;
 		git     ) $EDITOR ~/.gitconfig ~/.gitignore;;
 		python  ) $EDITOR ~/.config/pycodestyle;;
 		pip     ) $EDITOR ~/.config/pip/pip.conf;;
@@ -27,8 +27,8 @@ function log
 		-c|crit*) shift && echo -n $PURPLE ;;
 		-f|fatal) echo $RED$BOLD'┃'$RESET$BG_RED$WHITE$BOLD ${@:2} $RESET && return ;;
 		show|help)
-			log important important
 			log -d debug
+			log important important
 			log -i info
 			log -w warning
 			log -e error
@@ -36,10 +36,8 @@ function log
 			log -f FATAL
 			return
 			;;
-		# *) echo ${BLUE}debug$RESET, ${GREEN}info$RESET, ${YELLOW}warn${FAINT}ing$RESET, ${RED}err${FAINT}or$RESET, ${PURPLE}crit${FAINT}ical$RESET;;
 	esac
 	echo $BOLD'┃'$RESET$BG_BR_BLACK $@ $RESET
-	# echo ▍$RESET$BG_BR_BLACK "$@" $RESET
 }
 
 alias log_debug='echo -n $BLUE && log'
@@ -70,7 +68,7 @@ function onthisday
 	[[ $birthday ]] && first='birthday'
 	[[ $history  ]] && first='history'
 	[[ $computer ]] && first='computer history'
-	[[ $computer && $history ]] && first='computer & history'
+	[[ $computer && $history ]] && first='computer + history'
 	echo " $FAINT$UNDERLINE      $RESET  $BLUE$UNDERLINE             $RESET"
 	echo -n ╭$FAINT$UNDERLINE'▏year'▕$RESET
 	echo -n ┬─$BLUE$BOLD$UNDERLINE'▏ON THIS DAY▕'$RESET
